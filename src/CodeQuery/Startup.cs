@@ -14,6 +14,7 @@ using CodeQuery.Services;
 using Newtonsoft.Json.Serialization;
 using CodeQuery.Repositories;
 
+
 namespace CodeQuery
 {
     public class Startup
@@ -41,7 +42,8 @@ namespace CodeQuery
         public void ConfigureServices(IServiceCollection services)
         {
             //used for Generic Repositories
-            services.AddScoped<IGenericRepository, GenericRepository>(); 
+            services.AddScoped<IGenericRepository, GenericRepository>();
+            services.AddScoped<IQuestionService, QuestionService>();
 
             // Add framework services.
             services.AddEntityFramework()

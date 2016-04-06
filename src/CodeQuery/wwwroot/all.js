@@ -112,6 +112,121 @@ var MyApp;
 /// <reference path="ngapp/app.ts" />
 var MyApp;
 (function (MyApp) {
+    var Services;
+    (function (Services) {
+        var AnswerService = (function () {
+            function AnswerService($resource) {
+                this.$resource = $resource;
+                this.answerResource = this.$resource('/api/answers/:id');
+            }
+            AnswerService.prototype.SaveAnswer = function (answerToSave) {
+                console.log(answerToSave);
+                return this.answerResource.save(answerToSave).$promise;
+            };
+            return AnswerService;
+        }());
+        Services.AnswerService = AnswerService;
+        angular.module("MyApp").service("answerService", AnswerService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var QuestionService = (function () {
+            function QuestionService($resource) {
+                this.$resource = $resource;
+                this.questionResource = this.$resource('/api/question/:id');
+            }
+            QuestionService.prototype.GetQuestionList = function () {
+                return this.questionResource.query();
+            };
+            QuestionService.prototype.GetQuestion = function (id) {
+                return this.questionResource.get({ id: id }).$promise;
+            };
+            QuestionService.prototype.SaveQuestion = function (questionToSave) {
+                //let newObj = {};
+                //console.log(questionToSave);
+                //console.log("Service - " + newObj);
+                return this.questionResource.save(questionToSave).$promise;
+            };
+            QuestionService.prototype.DeleteQuestion = function (id) {
+                //console.log("Delete Question in QuestionService.ts");
+                //console.log(id);
+                return this.questionResource.delete({ id: id }).$promise;
+            };
+            QuestionService.prototype.VoteUp = function (vote) {
+                //console.log("VoteUp in Service");
+                //console.log(vote);
+                //console.log(typeof vote);
+                var voteResource = this.$resource("/api/question/vote");
+                return voteResource.save(vote).$promise;
+            };
+            QuestionService.prototype.VoteDown = function (vote) {
+                var voteResource = this.$resource("api/question/vote");
+                return voteResource.save(vote).$promise;
+            };
+            QuestionService.prototype.AddComment = function (comment) {
+                var commentResource = this.$resource("api/question/comment");
+                return commentResource.save(comment).$promise;
+            };
+            return QuestionService;
+        }());
+        Services.QuestionService = QuestionService;
+        angular.module("MyApp").service('questionService', QuestionService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var MovieService = (function () {
+            function MovieService($resource) {
+                this.MovieResource = $resource('/api/movies');
+            }
+            MovieService.prototype.listMovies = function () {
+                return this.MovieResource.query();
+            };
+            return MovieService;
+        }());
+        Services.MovieService = MovieService;
+        angular.module('MyApp').service('movieService', MovieService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Filters;
+    (function (Filters) {
+        function HotTopic() {
+            return function (input, length) {
+                var result = [];
+                angular.forEach(input, function (value, key) {
+                    angular.forEach(value, function (value2, key2) {
+                        if (value2 >= length) {
+                            result.push(value2);
+                        }
+                    });
+                });
+                return result;
+            };
+        }
+        function Recent() {
+            return function (input, length) {
+                var result = [];
+                angular.forEach(input, function (value, key) {
+                    angular.forEach(value, function (value2, key2) {
+                        if (value2 >= length) {
+                            result.push(value2);
+                        }
+                    });
+                });
+                return result;
+            };
+        }
+    })(Filters = MyApp.Filters || (MyApp.Filters = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
     var Controllers;
     (function (Controllers) {
         var AskQuestionController = (function () {
@@ -485,120 +600,5 @@ var MyApp;
         }());
         Controllers.SignupController = SignupController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Filters;
-    (function (Filters) {
-        function HotTopic() {
-            return function (input, length) {
-                var result = [];
-                angular.forEach(input, function (value, key) {
-                    angular.forEach(value, function (value2, key2) {
-                        if (value2 >= length) {
-                            result.push(value2);
-                        }
-                    });
-                });
-                return result;
-            };
-        }
-        function Recent() {
-            return function (input, length) {
-                var result = [];
-                angular.forEach(input, function (value, key) {
-                    angular.forEach(value, function (value2, key2) {
-                        if (value2 >= length) {
-                            result.push(value2);
-                        }
-                    });
-                });
-                return result;
-            };
-        }
-    })(Filters = MyApp.Filters || (MyApp.Filters = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var AnswerService = (function () {
-            function AnswerService($resource) {
-                this.$resource = $resource;
-                this.answerResource = this.$resource('/api/answers/:id');
-            }
-            AnswerService.prototype.SaveAnswer = function (answerToSave) {
-                console.log(answerToSave);
-                return this.answerResource.save(answerToSave).$promise;
-            };
-            return AnswerService;
-        }());
-        Services.AnswerService = AnswerService;
-        angular.module("MyApp").service("answerService", AnswerService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var QuestionService = (function () {
-            function QuestionService($resource) {
-                this.$resource = $resource;
-                this.questionResource = this.$resource('/api/question/:id');
-            }
-            QuestionService.prototype.GetQuestionList = function () {
-                return this.questionResource.query();
-            };
-            QuestionService.prototype.GetQuestion = function (id) {
-                return this.questionResource.get({ id: id }).$promise;
-            };
-            QuestionService.prototype.SaveQuestion = function (questionToSave) {
-                //let newObj = {};
-                //console.log(questionToSave);
-                //console.log("Service - " + newObj);
-                return this.questionResource.save(questionToSave).$promise;
-            };
-            QuestionService.prototype.DeleteQuestion = function (id) {
-                //console.log("Delete Question in QuestionService.ts");
-                //console.log(id);
-                return this.questionResource.delete({ id: id }).$promise;
-            };
-            QuestionService.prototype.VoteUp = function (vote) {
-                //console.log("VoteUp in Service");
-                //console.log(vote);
-                //console.log(typeof vote);
-                var voteResource = this.$resource("/api/question/vote");
-                return voteResource.save(vote).$promise;
-            };
-            QuestionService.prototype.VoteDown = function (vote) {
-                var voteResource = this.$resource("api/question/vote");
-                return voteResource.save(vote).$promise;
-            };
-            QuestionService.prototype.AddComment = function (comment) {
-                var commentResource = this.$resource("api/question/comment");
-                return commentResource.save(comment).$promise;
-            };
-            return QuestionService;
-        }());
-        Services.QuestionService = QuestionService;
-        angular.module("MyApp").service('questionService', QuestionService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var MovieService = (function () {
-            function MovieService($resource) {
-                this.MovieResource = $resource('/api/movies');
-            }
-            MovieService.prototype.listMovies = function () {
-                return this.MovieResource.query();
-            };
-            return MovieService;
-        }());
-        Services.MovieService = MovieService;
-        angular.module('MyApp').service('movieService', MovieService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
 })(MyApp || (MyApp = {}));
 //# sourceMappingURL=all.js.map
