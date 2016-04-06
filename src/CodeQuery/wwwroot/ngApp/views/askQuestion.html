@@ -1,0 +1,81 @@
+﻿<h2 class="title">Ask a Question</h2>
+
+<div class="ask-question-form">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+            <form novalidate ng-submit="controller.SaveQuestion()" name="questionForm">
+                <div class="form-group ctr">
+                    <label class="fl">Title</label>
+                    <input type="text" name="title" class="form-control" ng-model="controller.questionToCreate.title" placeholder="type your question here ..." required/>
+                    <span ng-show="questionForm.title.$touched && questionForm.title.$error.required" class="error red" style="text-align:center"> --- Question Title is required ---</span>
+                </div>
+                <div class="form-group ctr">
+                    <label class="fl">Type description below:</label>
+                    <!--<input type="text" class="form-control" ng-model="controller.questionToCreate.body" />-->
+                    <textarea placeholder="Description ... " name="body" class="form-control description-text" ng-model="controller.questionToCreate.body" required></textarea>
+                    <span ng-show="questionForm.body.$touched && questionForm.body.$error.required" class="error red">Description is required</span>
+                </div>
+                <div class="form-group ctr">
+                    <label class="fl">Labels</label>
+                    <input type="text" class="form-control" name="labels" ng-model="controller.questionToCreate.labels" placeholder="enter tags here ..." />
+                </div>
+                <div class="form-group pull-right">
+                    <input type="submit" value="Ask Question" class="btn" ng-disabled="questionForm.$invalid" />
+                </div>
+            </form>
+        </div>
+        <!--<div class="table-container">
+            <table class="table ask-title">
+                <tbody>
+                    <tr>
+                        <td class="title-label-cell">
+                            <label for="title">Title</label><br />
+                        </td>
+                        <td class="ask-title-cell">
+                            <input type="text" id="title" name="title" placeholder="type your question here ..." maxlength="300" class="ask-title-field" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <form class="description-text-row form-control">
+                <div class="description-header">
+                    <label>Type description below ... </label>
+                </div>
+                <div class="question-text-box">
+                    <textarea placeholder="Description ... " class="description-text"></textarea>
+                </div>
+                <div class="dividers">
+
+                </div>
+                <div class="tags">
+                    <input type="text" placeholder="Enter tags here ..." name="tags" id="tags" class="tags-text" />
+                    <button class="btn add-tag-btn">Add Tag</button>
+                    <div class="tag-list">
+                        <span class="label label-default" style="margin-right: 5px"><a class="link-label" href="#">HTML</a></span>
+                        <span class="label label-default" style="margin-right: 5px"><a class="link-label" href="#">C#</a></span>
+                        <span class="label label-default" style="margin-right: 5px"><a class="link-label" href="#">Angular</a></span>
+                    </div>
+                </div>
+                <div class="form-button">
+                    <button type="submit" class="btn">Submit</button>
+                </div>
+            </form>
+        </div>-->
+        <div class="col-md-5 leftLine">
+            <div class="helpful-info-container">
+                <div class="helpful-body">
+                    <h2>Welcome to  Code Query</h2>
+                    <p>We'd love to help you, but the reality is that not every question gets answered.  To <strong>improve your chances, </strong>here are some tips:</p>
+                    <h3>Search, and research</h3>
+                    <p>Have you thoroughly searched for an answer before asking your question? Sharing your research helps everyone. Tell us what you found (on this site or elsewhere) and why it didn’t meet your needs. This demonstrates that you’ve taken the time to try to help yourself, it saves us from reiterating obvious answers, and above all, it helps you get a more specific and relevant answer!</p>
+                    <h3>Be on-topic</h3>
+                    <p>Our community is defined by a specific set of topics in the help center; please stick to those topics and avoid asking for opinions or open-ended discussion.</p>
+                    <h3>Make it relevant to others</h3>
+                    <p>We like to help as many people at a time as we can. Make it clear how your question is relevant to more people than just you, and more of us will be interested in your question and willing to look into it.</p>
+                    <h3>Keep an open mind</h3>
+                    <p>The answer to your question may not always be the one you wanted, but that doesn’t mean it is wrong. A conclusive answer isn’t always possible. When in doubt, ask people to cite their sources, or to explain how/where they learned something. Even if we don’t agree with you, or tell you exactly what you wanted to hear, remember: we’re just trying to help.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿<!--<h2>Ask a Question</h2>
+
+
+
+<br /> <hr />-->
+<div class="question-container">
+    <!--<div class="row">
+        <button ng-click="controller.addNew()" class="btn btn-primary">Add New Question</button> <br /> <br />
+    </div>-->
+    <div class="row">
+        <table class="table table-striped">
+            <tr>
+                <th>Views</th>
+                <th>Replies</th>
+                <th>Question</th>
+            </tr>
+            <tr ng-repeat="post in controller.posts">
+                <td>{{post.views}}</td>
+                <td>{{post.replies}}</td>
+                <td>{{post.title}}</td>
+            </tr>
+        </table>
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

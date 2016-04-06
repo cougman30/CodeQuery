@@ -1,0 +1,28 @@
+﻿<h1>Profile Page</h1>
+
+<div class="container-fluid profile-container">
+    <div class="side-menu">
+        <ul class="profile-ul">
+            <li class="category">
+                Personal Information
+                <ul class="profile-ul">
+                    <li><a ui-sref="profile.details">Profile</a></li>
+                    <li><a ui-sref="profile.edit">Edit Profile</a></li>
+                </ul>
+            </li>
+            <li class="category">
+                Site Settings
+                <ul class="profile-ul">
+                    <li>Preferences</li>
+                    <li>Delete Profile</li>
+                    <li>3rd Link</li>
+                </ul>
+            </li>
+            <li class="category">Other</li>
+        </ul>
+    </div>
+    <div class="profile-details">
+        <h1><!--Profile Details View--></h1>
+        <ui-view></ui-view>
+    </div>
+</div>

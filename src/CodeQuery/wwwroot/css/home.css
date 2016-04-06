@@ -1,0 +1,94 @@
+﻿.message-container{
+    margin-left:100px;
+    width: 1000px;
+}
+
+.votes-cell, .answer-cell, .view-cell{
+    width: 40px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    /*height: 50px;*/
+}
+
+.votes-cell-num, .answer-cell-num, .view-cell-num{
+    font-size: 14px;
+}
+
+.votes-cell-text, .answer-cell-text, .view-cell-text{
+    font-size: 10px;
+}
+
+.post-cell{
+    padding-bottom: 3px !important;
+    border-bottom: 1px solid #ddd;
+}
+
+.post-title{
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.post-title-labels{
+    display: inline;
+}
+
+.post-title-user-info{
+    float: right;
+}
+
+.post-timestamp{
+    display: inline;
+    font-size: 12px;
+}
+
+.post-user-info{
+    display: inline;
+    font-size: 13px;
+    margin-left: 2px;
+}
+
+.link-label{
+    color: #666;
+}
+
+.link-label:hover{
+    color: #666;
+    text-decoration: none;
+}
+
+.answer-submitted{
+    background-color:darkorange;
+}
+
+.answer-accepted{
+    background-color:green;
+}
+
+.hot-question{
+    background-color: red;
+}
+
+.lots-votes{
+    background-color: yellow;
+}
+
+.label{
+    font-size: 65%;
+}
+
+.pages{
+    margin-left:16px;
+}
+
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover{
+    background-image: linear-gradient(to bottom,#666 0,#222 100%);
+    color: white;
+    border: 1px solid #777;
+}
+
+.pagination>li>a, .pagination>li>span{
+    background-image: linear-gradient(to bottom,#666 0,#222 100%);
+    border: 1px solid #777;
+    color: white;
+}

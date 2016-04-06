@@ -1,0 +1,149 @@
+<!--<h2>Home</h2>
+<p>
+    {{controller.message}}
+</p>
+
+<h1>Welcome to Code Query!</h1>-->
+
+
+<div class="fluid-container message-container">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#all" aria-controls="all" role="tab" data-toggle="tab">All Questions</a></li>
+                <li role="presentation" class="pull-right"><a href="#hot" aria-controls="hot" role="tab" data-toggle="tab">Hot Topics</a></li>
+                <li role="presentation" class="pull-right"><a href="#recent" aria-controls="recent" role="tab" data-toggle="tab">Most Recent Questions</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <tr ng-repeat="post in controller.posts">
+                    <td class="votes-cell">
+                        <div class="votes-cell-num">
+                            {{post.votes}}
+                        </div>
+                        <div class="votes-cell-text">
+                            Votes
+                        </div>
+                    </td>
+                    <td class="answer-cell" ng-class="{{post.replyCount}} > 20">
+                        <div class="answer-cell-num">
+                            {{post.replyCount}}
+                        </div>
+                        <div class="answer-cell-text">
+                            Answers
+                        </div>
+                    </td>
+                    <td class="view-cell">
+                        <div class="view-cell-num">
+                            {{post.views}}
+                        </div>
+                        <div class="view-cell-text">
+                            Views
+                        </div>
+                    </td>
+                    <td class="post-cell">
+                        <div class="post-title">
+                            <a href="/message/{{post.id}}">{{post.title}}</a>
+                        </div>
+                        <div class="post-title-labels">
+                            <span ng-repeat="label in post.labels" uib-popover="Search for questions about {{label.title}}" popover-trigger="mouseenter" popover-animation="true" class="label label-default" style="margin-right: 5px">
+                                <a class="link-label" href="#">{{label.title}}</a>
+                            </span>
+                        </div>
+                        <button uib-popover-html="htmlPopover" class="btn btn-default">HTML Popover</button>
+                        <div class="post-title-user-info">
+                            <div class="post-timestamp">
+                                asked 1 min ago
+                            </div>
+                            <div class="post-user-info">
+                                <a href="#" uib-popover="View Profile" popover-trigger="mouseenter" popover-animation="true">Andrey</a> <span title="reputation score"> 7379</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="pages">
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+<!--<div class="row home-container">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#all" aria-controls="all" role="tab" data-toggle="tab">All Questions</a></li>
+            <li role="presentation" class="pull-right"><a href="#hot" aria-controls="hot" role="tab" data-toggle="tab">Hot Topics</a></li>
+            <li role="presentation" class="pull-right"><a href="#recent" aria-controls="recent" role="tab" data-toggle="tab">Most Recent Questions</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="all">
+            <table class="table table-striped">
+                <tr>
+                    <th>Views</th>
+                    <th>Replies</th>
+                    <th>Question</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="post in controller.posts">
+                    <td>{{post.views}}</td>
+                    <td>{{post.replies}}</td>
+                    <td>{{post.title}}</td>
+                    <td><a href="/message/{{post.id}}">Details</a> <span class="label label-primary pull-right" ng-repeat="label in post.labels" style="margin-right: 5px">{{label}}</span></td>
+                </tr>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="hot">
+            <table class="table table-striped">
+                <tr>
+                    <th>Views</th>
+                    <th>Replies</th>
+                    <th>Question</th>
+                </tr>
+                <tr ng-repeat="hot in controller.hots">
+                    <td>{{hot.views}}</td>
+                    <td>{{hot.replies}}</td>
+                    <td>{{hot.title}} <span class="label label-primary pull-right" ng-repeat="label in post.labels" style="margin-right: 5px">{{label}}</span></td>
+                </tr>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="recent">
+            <table class="table table-striped">
+                <tr>
+                    <th>Views</th>
+                    <th>Replies</th>
+                    <th>Question</th>
+                </tr>
+                <tr ng-repeat="recent in controller.recents">
+                    <td>{{recent.views}}</td>
+                    <td>{{recent.replies}}</td>
+                    <td>{{recent.title}} <span class="label label-primary pull-right" ng-repeat="label in post.labels" style="margin-right: 5px">{{label}}</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>-->

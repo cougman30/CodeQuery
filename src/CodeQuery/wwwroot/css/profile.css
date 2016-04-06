@@ -1,0 +1,135 @@
+﻿.profile-container{
+    margin-left: 50px;
+    margin-top: 30px;
+    border-top: 1px solid black;
+}
+
+.profile-image{
+    margin-bottom: 15px;
+}
+
+.edit-profile-btn{
+    margin-left: 30px;
+}
+
+.public-info{
+    margin-top: -40px;
+    border-left: 1px solid black;
+    padding-left: 25px;
+}
+
+.side-menu{
+    width: 240px;
+    /*border-right: 1px solid black;*/
+    display: inline-table;
+    margin-right: 0;
+}
+
+.category{
+    color: orange;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 24px 0 10px 0;
+}
+
+.profile-details{
+    display: inline-block;
+    width: 60%;
+    margin-top: 0;
+}
+
+.profile-body{
+    display: inline-flex;
+}
+
+.profile-ul{
+    list-style: none;
+}
+
+.category li{
+    color: black;
+}
+
+.container-fluid .profile-container{
+    width: auto;
+    vertical-align: top;
+    /*border-top: 1px solid black;*/
+}
+
+#profile-nested-view{
+    display: inline-flex;
+}
+
+.profile-icon{
+    color:black;
+}
+.type-dev{
+
+}
+
+.code-btn{
+    background-color: #ccc;
+    color: #333;
+    width: 100px;
+    height: 33px;
+}
+
+.code-btn.active{
+    background-color: #333;
+    color: #ccc;
+    height: 33px;
+}
+
+.separator{
+    min-width: 32px;
+    background: #eee;
+    font-size: 13px;
+    padding: 8px 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    width: 50px;
+    margin-left: -4px;
+}
+
+.ac-input{
+    width: 150px;
+    max-width: none;
+    height: 33px;
+    border: 1px solid #ccc;
+    padding: 0 7px;
+    margin-left:-4px;
+}
+
+#hobby-code-input{
+    width: 331px;
+}
+
+.profile-input{
+    width: 250px;
+    height: 33px;
+    border: 1px solid #ccc;
+    padding: 0 7px;
+    border-radius: 5px;
+    float: right;
+}
+
+.profile-label{
+    margin: 10px;
+}
+
+.profile-textarea{
+    width: 100%;
+    min-height: 200px;
+    resize: vertical;
+    max-width: none;
+}
+
+.profile-input-career{
+    width: 200px;
+    height: 33px;
+    border: 1px solid #ccc;
+    padding: 0 7px;
+    border-radius: 5px;
+    float: right;
+}
