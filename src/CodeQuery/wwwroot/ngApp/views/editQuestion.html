@@ -14,7 +14,7 @@
             </div>
             <div class="form-group ctr">
                 <label class="fl">Labels</label>
-                <input type="text" class="form-control" name="labels" ng-model="controller.postToEdit.labels" />
+                <tags-input ng-model="controller.postToEdit.labels"></tags-input>
             </div>
             <div class="form-group pull-right">
                 <input type="submit" value="Save Post" class="btn" ng-disabled="questionForm.$invalid" />

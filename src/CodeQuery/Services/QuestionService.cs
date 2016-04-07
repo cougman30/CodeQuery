@@ -18,7 +18,8 @@ namespace CodeQuery.Services
 
         public List<PostListViewModel> GetPostList()
         {
-            var data = repo.Query<Post>().Select(p => new PostListViewModel {
+            var data = repo.Query<Post>().Select(p => new PostListViewModel
+            {
                 ID = p.ID,
                 Title = p.Title,
                 CreationDate = p.CreationDate,
@@ -46,6 +47,27 @@ namespace CodeQuery.Services
             {
                 repo.Add(data);
 
+                foreach (var name in data.Labels)
+                {
+                    var check = repo.Query<Label>().Where(l => l.Text == name.Text).FirstOrDefault();
+
+                    if (check == null)
+                    {
+                        repo.Add<Label>(name);
+                        repo.SaveChanges();
+                    }
+
+                    check = repo.Query<Label>().Where(l => l.Text == name.Text).FirstOrDefault();
+
+                    repo.Add<PostLabel>(new PostLabel
+                    {
+                        PostID = data.ID,
+                        LabelID = check.ID
+                    });
+                    repo.SaveChanges();
+                }
+
+
                 var newPost = repo.Query<Post>().Where(p => p.ID == data.ID).FirstOrDefault();
                 newPost.CreationDate = DateTime.Now;
                 newPost.ModifiedDate = DateTime.Now;
@@ -53,11 +75,31 @@ namespace CodeQuery.Services
             }
             else
             {
-                //var postToEdit = db.Posts.Where(p => p.ID == data.ID).FirstOrDefault();
-                //postToEdit.Body = data.Body;
-                ////postToEdit.Labels = data.Labels;
-                //postToEdit.Title = data.Title;
-                //postToEdit.ModifiedDate = DateTime.Now;
+                foreach (var name in data.Labels)
+                {
+                    var check = repo.Query<Label>().Where(l => l.Text == name.Text).FirstOrDefault();
+
+                    if (check == null)
+                    {
+                        repo.Add<Label>(name);
+                        repo.SaveChanges();
+                    }
+
+                    check = repo.Query<Label>().Where(l => l.Text == name.Text).FirstOrDefault();
+
+                    bool exists = repo.Query<PostLabel>().Where(pl => pl.LabelID == check.ID && pl.PostID == data.ID).Any();
+
+                    if (!exists)
+                    {
+
+                        repo.Add<PostLabel>(new PostLabel
+                        {
+                            PostID = data.ID,
+                            LabelID = check.ID
+                        });
+                    }
+                    repo.SaveChanges();
+                }
 
                 var postToEdit = repo.Query<Post>().Where(p => p.ID == data.ID).FirstOrDefault();
                 postToEdit.Body = data.Body;

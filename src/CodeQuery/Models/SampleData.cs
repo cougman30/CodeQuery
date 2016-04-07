@@ -22,9 +22,9 @@ namespace CodeQuery.Models
                         ReplyCount = 17,
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus, leo in volutpat eleifend, orci est pulvinar arcu, ac lacinia ex tellus vitae augue. Donec molestie nulla et elit vehicula finibus. Duis magna tellus, molestie sed rhoncus at, scelerisque vel enim. Nunc ornare, neque finibus efficitur congue, dolor ex semper dui, venenatis gravida nibh mi at mi. Morbi gravida sollicitudin ex, quis finibus ex tincidunt tincidunt. Donec tristique nisl vel libero ultrices finibus. Curabitur accumsan ex suscipit, venenatis tortor non, aliquam libero. Aliquam non malesuada eros.Vestibulum eget libero velit.Duis aliquet interdum elit, at eleifend tortor pellentesque nec. Maecenas id rhoncus sapien. Pellentesque orci neque, vehicula id tincidunt id, commodo ut nunc. Morbi vel pharetra magna, non malesuada tellus. Nunc id eleifend enim, sed sodales ante. Phasellus quis porttitor est. Suspendisse faucibus purus eu efficitur congue. Pellentesque mi ipsum, iaculis placerat pretium sed, convallis vitae elit. Aliquam venenatis ut sem non laoreet. Vestibulum at metus et tellus tincidunt aliquet.Duis bibendum urna diam, ut congue ex dignissim sed. Praesent lacinia enim velit, eu imperdiet diam feugiat eu. Proin sit amet dapibus orci, eget eleifend sem.In quis semper orci.Pellentesque faucibus libero in nunc egestas, sit amet consectetur nibh congue. Aenean vel turpis massa. In hac habitasse platea dictumst.Curabitur efficitur ut quam sit amet commodo.Sed vitae metus ut mauris dignissim luctus feugiat id purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu enim lectus. Maecenas venenatis, diam ornare bibendum rhoncus, nulla orci finibus urna, vel bibendum lacus libero semper turpis.Sed eget sapien diam.Proin eget molestie mauris. Maecenas rutrum feugiat ligula non interdum. Nulla placerat, velit et fringilla gravida, metus nisl sodales sapien, nec mollis tellus erat a lacus.Nulla vitae tempor leo. Nulla at tortor lorem. Maecenas venenatis accumsan diam, vitae imperdiet sapien auctor vitae. Curabitur finibus dolor vel ante viverra, sit amet congue mauris egestas.",
                         Replies = new List<Reply> {
-                            new Reply { Message = "This is a really good article" },
-                            new Reply { Message = "I don't understand" },
-                            new Reply { Message = "You just need to look at it from the left side" }
+                            new Reply { Message = "This is a really good article", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "I don't understand", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "You just need to look at it from the left side", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now }
                         },
                         CreationDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
@@ -37,8 +37,8 @@ namespace CodeQuery.Models
                         ReplyCount = 23,
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus, leo in volutpat eleifend, orci est pulvinar arcu, ac lacinia ex tellus vitae augue. Donec molestie nulla et elit vehicula finibus. Duis magna tellus, molestie sed rhoncus at, scelerisque vel enim. Nunc ornare, neque finibus efficitur congue, dolor ex semper dui, venenatis gravida nibh mi at mi. Morbi gravida sollicitudin ex, quis finibus ex tincidunt tincidunt. Donec tristique nisl vel libero ultrices finibus. Curabitur accumsan ex suscipit, venenatis tortor non, aliquam libero.",
                         Replies = new List<Reply> {
-                            new Reply { Message = "What are you talking about?" },
-                            new Reply { Message = "Help Me!" },
+                            new Reply { Message = "What are you talking about?", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "Help Me!", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
                         },
                         CreationDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
@@ -51,9 +51,9 @@ namespace CodeQuery.Models
                         ReplyCount = 54,
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus, leo in volutpat eleifend, orci est pulvinar arcu, ac lacinia ex tellus vitae augue. Donec molestie nulla et elit vehicula finibus. Duis magna tellus, molestie sed rhoncus at, scelerisque vel enim. Nunc ornare, neque finibus efficitur congue, dolor ex semper dui, venenatis gravida nibh mi at mi. Morbi gravida sollicitudin ex, quis finibus ex tincidunt tincidunt. Donec tristique nisl vel libero ultrices finibus. Curabitur accumsan ex suscipit, venenatis tortor non, aliquam libero.",
                         Replies = new List<Reply> {
-                            new Reply { Message = "How did you get that answer?" },
-                            new Reply { Message = "Go slower" },
-                            new Reply { Message = "By reading the lessons" }
+                            new Reply { Message = "How did you get that answer?", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "Go slower", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "By reading the lessons", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now }
                         },
                         CreationDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
@@ -66,8 +66,8 @@ namespace CodeQuery.Models
                         ReplyCount = 8,
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus, leo in volutpat eleifend, orci est pulvinar arcu, ac lacinia ex tellus vitae augue. Donec molestie nulla et elit vehicula finibus. Duis magna tellus, molestie sed rhoncus at, scelerisque vel enim. Nunc ornare, neque finibus efficitur congue, dolor ex semper dui, venenatis gravida nibh mi at mi. Morbi gravida sollicitudin ex, quis finibus ex tincidunt tincidunt. Donec tristique nisl vel libero ultrices finibus. Curabitur accumsan ex suscipit, venenatis tortor non, aliquam libero.",
                         Replies = new List<Reply> {
-                            new Reply { Message = "You can do it!" },
-                            new Reply { Message = "I wanted the classes on the same element" },
+                            new Reply { Message = "You can do it!", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "I wanted the classes on the same element", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
                         },
                         CreationDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
@@ -80,7 +80,7 @@ namespace CodeQuery.Models
                         ReplyCount = 11,
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus, leo in volutpat eleifend, orci est pulvinar arcu, ac lacinia ex tellus vitae augue. Donec molestie nulla et elit vehicula finibus. Duis magna tellus, molestie sed rhoncus at, scelerisque vel enim. Nunc ornare, neque finibus efficitur congue, dolor ex semper dui, venenatis gravida nibh mi at mi. Morbi gravida sollicitudin ex, quis finibus ex tincidunt tincidunt. Donec tristique nisl vel libero ultrices finibus. Curabitur accumsan ex suscipit, venenatis tortor non, aliquam libero.",
                         Replies = new List<Reply> {
-                            new Reply { Message = "This is a really bad article" },
+                            new Reply { Message = "This is a really bad article", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
                         },
                         CreationDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
@@ -93,12 +93,12 @@ namespace CodeQuery.Models
                         ReplyCount = 5,
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus, leo in volutpat eleifend, orci est pulvinar arcu, ac lacinia ex tellus vitae augue. Donec molestie nulla et elit vehicula finibus. Duis magna tellus, molestie sed rhoncus at, scelerisque vel enim. Nunc ornare, neque finibus efficitur congue, dolor ex semper dui, venenatis gravida nibh mi at mi. Morbi gravida sollicitudin ex, quis finibus ex tincidunt tincidunt. Donec tristique nisl vel libero ultrices finibus. Curabitur accumsan ex suscipit, venenatis tortor non, aliquam libero.",
                         Replies = new List<Reply> {
-                            new Reply { Message = "Hello" },
-                            new Reply { Message = "Hola" },
-                            new Reply { Message = "Ciao" },
-                            new Reply { Message = "Ahoj" },
-                            new Reply { Message = "Hej" },
-                            new Reply { Message = "Salut" }
+                            new Reply { Message = "Hello", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "Hola", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "Ciao", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "Ahoj", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "Hej", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "Salut", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now }
                         },
                         CreationDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
@@ -111,8 +111,8 @@ namespace CodeQuery.Models
                         ReplyCount = 2,
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus, leo in volutpat eleifend, orci est pulvinar arcu, ac lacinia ex tellus vitae augue. Donec molestie nulla et elit vehicula finibus. Duis magna tellus, molestie sed rhoncus at, scelerisque vel enim. Nunc ornare, neque finibus efficitur congue, dolor ex semper dui, venenatis gravida nibh mi at mi. Morbi gravida sollicitudin ex, quis finibus ex tincidunt tincidunt. Donec tristique nisl vel libero ultrices finibus. Curabitur accumsan ex suscipit, venenatis tortor non, aliquam libero.",
                         Replies = new List<Reply> {
-                            new Reply { Message = "I am lost" },
-                            new Reply { Message = "Don't panic!" },
+                            new Reply { Message = "I am lost", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
+                            new Reply { Message = "Don't panic!", CreationDate = DateTime.Now, ModifiedDate = DateTime.Now },
                         },
                         CreationDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
