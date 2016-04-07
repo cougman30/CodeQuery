@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 using CodeQuery.Models;
 using Microsoft.Data.Entity;
 using CodeQuery.Services;
+using CodeQuery.Models.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -120,18 +121,6 @@ namespace CodeQuery.API
         [HttpGet]
         public IActionResult Get()
         {
-            //var list = db.Posts.Select(p => new PostListViewModel
-            //{
-            //    Title = p.Title,
-            //    ID = p.ID,
-            //    CreationDate = p.CreationDate,
-            //    ModifiedDate = p.ModifiedDate,
-            //    Views = p.Views,
-            //    ReplyCount = p.ReplyCount,
-            //    Votes = p.Votes,
-            //    Labels = p.PostLabels.Select(pl => pl.Label).ToList()
-            //});
-
             var list = db.GetPostList();
 
             return Ok(list);
@@ -141,32 +130,6 @@ namespace CodeQuery.API
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            //var singlePost = (from p in _postList where p.ID == id select p).FirstOrDefault();
-            //return singlePost;
-
-            //var single = db.Posts.Where(p => p.ID == id).Include(p => p.Replies).FirstOrDefault();
-            //return single;
-
-            //var labels = db.PostLabels.Where(pl => pl.PostID == id).Select(pl => pl.Label).ToList();
-            //var replies = db.Posts.Where(p => p.ID == id).Select(p => p.Replies);
-            //var answers = db.Posts.Where(p => p.ID == id).Select(p => p.Answers).ToList();
-            //var singlePost = db.Posts.Where(p => p.ID == id).Select(p => new Post
-            //{
-            //   ID = p.ID,
-            //   //Answers = p.Answers.ToList(),
-            //   Body = p.Body,
-            //   CreationDate = p.CreationDate,
-            //   Labels = p.PostLabels.Select(pl => pl.Label).ToList(),
-            //   ModifiedDate = p.ModifiedDate,
-            //   //Replies = replies.ToList(),
-            //   Title = p.Title,
-            //   Views = p.Views,
-            //   Votes = p.Votes
-            //}).FirstOrDefault();
-
-            //var singlePost = db.Posts.Where(p => p.ID == id).Include(p => p.Replies).Include(p => p.Answers).FirstOrDefault();
-            //singlePost.Labels = db.PostLabels.Where(pl => pl.PostID == id).Select(pl => pl.Label).ToList();
-
             var singlePost = db.GetPost(id);
 
             return Ok(singlePost);
@@ -176,33 +139,18 @@ namespace CodeQuery.API
         [Route("vote")]
         public IActionResult Vote([FromBody]VoteViewModel data)
         {
-            //var post = db.Posts.Where(p => p.ID == data.ID).FirstOrDefault();
-
-            //if (post != null)
-            //{
                 if (data.Text == "VoteUp")
                 {
-                    //post.Votes+-= 1;
-                    //db.SaveChanges();
-
                     db.VoteUp(data.ID);
                 }
                 else if (data.Text == "VoteDown")
                 {
-                    //post.Votes -= 1;
-                    //db.SaveChanges();
-
                     db.VoteDown(data.ID);
                 }
                 else
                 {
                     return HttpBadRequest();
                 }
-            //}
-            //else
-            //{
-            //    return HttpBadRequest();
-            //}
 
             return Ok();
         }
@@ -211,17 +159,6 @@ namespace CodeQuery.API
         [Route("comment")]
         public IActionResult Comment([FromBody]CommentViewModel data)
         {
-            //var post = db.Posts.Where(p => p.ID == data.ID).FirstOrDefault();
-
-            //var commentToAdd = new Reply
-            //{
-            //    CreationDate = DateTime.Now,
-            //    ModifiedDate = DateTime.Now,
-            //    Message = data.Body
-            //};
-            //post.Replies.Add(commentToAdd);
-            //db.SaveChanges();
-
             db.AddComment(data);
 
             return Ok();
@@ -229,32 +166,11 @@ namespace CodeQuery.API
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody]Post data)
+        public IActionResult Post([FromBody]NewPostViewModel data)
         {
-            //if (data.ID == 0)
-            //{
-            //    db.Posts.Add(data);
-            //    db.SaveChanges();
-
-            //    var editPost = db.Posts.Where(p => p.ID == data.ID).FirstOrDefault();
-            //    editPost.CreationDate = DateTime.Now;
-            //    editPost.ModifiedDate = DateTime.Now;
-            //}
-            //else
-            //{
-            //    var postToEdit = db.Posts.Where(p => p.ID == data.ID).FirstOrDefault();
-            //    postToEdit.Body = data.Body;
-            //    //postToEdit.Labels = data.Labels;
-            //    postToEdit.Title = data.Title;
-            //    postToEdit.ModifiedDate = DateTime.Now;
-            //}
-            ////_postList.Add(data);
-            //db.SaveChanges();
-
             db.SavePost(data);
 
             return Ok();
-            //return Created("/question/" + data.ID, data);
         }
 
         // PUT api/values/5
@@ -267,10 +183,6 @@ namespace CodeQuery.API
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            //var postToDelete = db.Posts.Where(p => p.ID == id).FirstOrDefault();
-            //db.Posts.Remove(postToDelete);
-            //db.SaveChanges();
-
             db.DeletePost(id);
 
             return Ok();

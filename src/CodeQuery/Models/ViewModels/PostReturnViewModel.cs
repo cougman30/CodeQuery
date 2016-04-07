@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CodeQuery.Models
+namespace CodeQuery.Models.ViewModels
 {
-    public class Post
+    public class PostReturnViewModel
     {
         public int ID { get; set; }
         public string Title { get; set; }
@@ -16,14 +16,16 @@ namespace CodeQuery.Models
         public DateTime ModifiedDate { get; set; }
         public int Votes { get; set; }
         public bool IsActive { get; set; }
+        public ICollection<Label> Labels { get; set; }
         public ICollection<Reply> Replies { get; set; }
         public ICollection<Post> Answers { get; set; }
         public ICollection<PostLabel> PostLabels { get; set; }
 
-        public Post()
+        public PostReturnViewModel()
         {
             this.Replies = new List<Reply>();
             this.Answers = new List<Post>();
+            this.Labels = new List<Label>();
         }
     }
 }

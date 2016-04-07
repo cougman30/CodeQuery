@@ -1,4 +1,5 @@
 ﻿using CodeQuery.Models;
+using CodeQuery.Models.ViewModels;
 using CodeQuery.Repositories;
 using System;
 using System.Collections.Generic;
@@ -33,19 +34,39 @@ namespace CodeQuery.Services
             return data;
         }
 
-        public Post GetPost(int id)
+        public PostReturnViewModel GetPost(int id)
         {
-            var data = repo.Query<Post>().Where(p => p.ID == id).Include(p => p.Replies).Include(p => p.Answers).FirstOrDefault();
-            data.Labels = repo.Query<PostLabel>().Where(pl => pl.PostID == id).Select(pl => pl.Label).ToList();
+            var data = repo.Query<Post>().Where(p => p.ID == id).Include(p => p.Replies).Include(p => p.Answers).FirstOrDefault(); 
+            var post = new PostReturnViewModel
+            {
+                ID = data.ID,
+                Title = data.Title,
+                Answers = data.Answers,
+                Body = data.Body,
+                CreationDate = data.CreationDate,
+                ModifiedDate = data.ModifiedDate,
+                Views = data.Views,
+                Votes = data.Votes,
+                Replies = data.Replies,
+                Labels = repo.Query<PostLabel>().Where(pl => pl.PostID == id).Select(pl => pl.Label).ToList()
+            };
 
-            return data;
+            return post;
         }
 
-        public void SavePost(Post data)
+        public void SavePost(NewPostViewModel data)
         {
             if (data.ID == 0)
             {
-                repo.Add(data);
+                var postToAdd = new Post
+                {
+                    Title = data.Title,
+                    CreationDate = DateTime.Now,
+                    ModifiedDate = DateTime.Now,
+                    Body = data.Body,
+                    IsActive = true,
+                };
+                repo.Add(postToAdd);
 
                 foreach (var name in data.Labels)
                 {
@@ -61,14 +82,14 @@ namespace CodeQuery.Services
 
                     repo.Add<PostLabel>(new PostLabel
                     {
-                        PostID = data.ID,
+                        PostID = postToAdd.ID,
                         LabelID = check.ID
                     });
                     repo.SaveChanges();
                 }
 
 
-                var newPost = repo.Query<Post>().Where(p => p.ID == data.ID).FirstOrDefault();
+                var newPost = repo.Query<Post>().Where(p => p.ID == postToAdd.ID).FirstOrDefault();
                 newPost.CreationDate = DateTime.Now;
                 newPost.ModifiedDate = DateTime.Now;
                 repo.SaveChanges();
@@ -113,7 +134,18 @@ namespace CodeQuery.Services
         public void DeletePost(int id)
         {
             var postToDelete = repo.Query<Post>().Where(p => p.ID == id).FirstOrDefault();
-            repo.Delete(postToDelete);
+
+            //var post = new Post() { ID = id };
+            //context.Categories.Attach(post);
+
+            //context.Categories.Remove(post);
+            //context.SaveChanges();
+
+            //postToDelete.Labels.Clear();
+            postToDelete.Replies.Clear();
+            postToDelete.Answers.Clear();
+
+            repo.Delete<Post>(postToDelete);
             return;
         }
 
