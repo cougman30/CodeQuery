@@ -19,7 +19,7 @@
                             <p>{{controller.post.body}}</p>
                         </div>
                         <div class="post-taglist">
-                            <span class="label label-default" ng-repeat="label in controller.post.labels" style="margin-right: 5px"><a class="link-label" href="#">{{label.title}}</a></span>
+                            <span class="label label-default" ng-repeat="label in controller.post.labels" style="margin-right: 5px"><a class="link-label" href="#">{{label.text}}</a></span>
                         </div>
                         <div class="after-post">
                             <table class="after-post-table">
@@ -27,7 +27,7 @@
                                     <tr>
                                         <td class="post-share-edit">
                                             <a href="#" title="short link to this question">Share</a> / 
-                                            <a href="/editMesage/{{controller.post.postID}}" title="revise and improve this post">Edit</a>
+                                            <a href="/editMesage/{{controller.post.id}}" title="revise and improve this post">Edit</a>
                                         </td>
                                         <td class="post-signature-owner">
                                             <div class="user-info">

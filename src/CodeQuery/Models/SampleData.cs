@@ -25,7 +25,10 @@ namespace CodeQuery.Models
                             new Reply { Message = "This is a really good article" },
                             new Reply { Message = "I don't understand" },
                             new Reply { Message = "You just need to look at it from the left side" }
-                        }   
+                        },
+                        CreationDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
+                        Votes = 6 
                     },
                     new Post
                     {
@@ -36,7 +39,10 @@ namespace CodeQuery.Models
                         Replies = new List<Reply> {
                             new Reply { Message = "What are you talking about?" },
                             new Reply { Message = "Help Me!" },
-                        }
+                        },
+                        CreationDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
+                        Votes = 1
                     },
                     new Post
                     {
@@ -48,7 +54,10 @@ namespace CodeQuery.Models
                             new Reply { Message = "How did you get that answer?" },
                             new Reply { Message = "Go slower" },
                             new Reply { Message = "By reading the lessons" }
-                        }
+                        },
+                        CreationDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
+                        Votes = 2
                     },
                     new Post
                     {
@@ -59,7 +68,10 @@ namespace CodeQuery.Models
                         Replies = new List<Reply> {
                             new Reply { Message = "You can do it!" },
                             new Reply { Message = "I wanted the classes on the same element" },
-                        }
+                        },
+                        CreationDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
+                        Votes = 0
                     },
                     new Post
                     {
@@ -69,7 +81,10 @@ namespace CodeQuery.Models
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus, leo in volutpat eleifend, orci est pulvinar arcu, ac lacinia ex tellus vitae augue. Donec molestie nulla et elit vehicula finibus. Duis magna tellus, molestie sed rhoncus at, scelerisque vel enim. Nunc ornare, neque finibus efficitur congue, dolor ex semper dui, venenatis gravida nibh mi at mi. Morbi gravida sollicitudin ex, quis finibus ex tincidunt tincidunt. Donec tristique nisl vel libero ultrices finibus. Curabitur accumsan ex suscipit, venenatis tortor non, aliquam libero.",
                         Replies = new List<Reply> {
                             new Reply { Message = "This is a really bad article" },
-                        }
+                        },
+                        CreationDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
+                        Votes = 9
                     },
                     new Post
                     {
@@ -84,7 +99,10 @@ namespace CodeQuery.Models
                             new Reply { Message = "Ahoj" },
                             new Reply { Message = "Hej" },
                             new Reply { Message = "Salut" }
-                        }
+                        },
+                        CreationDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
+                        Votes = 13
                     },
                     new Post
                     {
@@ -95,28 +113,31 @@ namespace CodeQuery.Models
                         Replies = new List<Reply> {
                             new Reply { Message = "I am lost" },
                             new Reply { Message = "Don't panic!" },
-                        }
+                        },
+                        CreationDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
+                        Votes = 2
                     }
                     );
                 db.SaveChanges();
 
                 db.Labels.AddRange(
-                    new Label { Title = "c#" },
-                    new Label { Title = "html" },
-                    new Label { Title = "inheritance" },
-                    new Label { Title = "javascript" },
-                    new Label { Title = "visual studio 2015" },
-                    new Label { Title = "angular" },
-                    new Label { Title = "ui-router" },
-                    new Label { Title = "bootstrap" },
-                    new Label { Title = "css" },
-                    new Label { Title = "linq" },
-                    new Label { Title = "database" },
-                    new Label { Title = "web" },
-                    new Label { Title = "typescript" },
-                    new Label { Title = "array" },
-                    new Label { Title = "loop" },
-                    new Label { Title = "classes" }
+                    new Label { Text = "c#" },
+                    new Label { Text = "html" },
+                    new Label { Text = "inheritance" },
+                    new Label { Text = "javascript" },
+                    new Label { Text = "visual studio 2015" },
+                    new Label { Text = "angular" },
+                    new Label { Text = "ui-router" },
+                    new Label { Text = "bootstrap" },
+                    new Label { Text = "css" },
+                    new Label { Text = "linq" },
+                    new Label { Text = "database" },
+                    new Label { Text = "web" },
+                    new Label { Text = "typescript" },
+                    new Label { Text = "array" },
+                    new Label { Text = "loop" },
+                    new Label { Text = "classes" }
                     );
                 db.SaveChanges();
 
@@ -124,76 +145,76 @@ namespace CodeQuery.Models
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How do I create webpages - I want to know").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "html").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "html").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How do I create webpages - I want to know").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "web").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "web").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How do I style a webpage").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "html").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "html").ID
                     }, new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How do I style a webpage").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "web").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "web").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How do I style a webpage").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "css").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "css").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How do I loop through an array").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "loop").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "loop").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How do I loop through an array").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "array").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "array").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How do I loop through an array").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "javascript").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "javascript").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "Can I add two classes to same html element").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "html").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "html").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "Can I add two classes to same html element").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "classes").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "classes").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How to declare a variable in Javascript").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "javascript").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "javascript").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How to create a new project in Visual Studio 2015").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "c#").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "c#").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "How to create a new project in Visual Studio 2015").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "visual studio 2015").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "visual studio 2015").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "What does inheritance mean").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "inheritance").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "inheritance").ID
                     },
                     new PostLabel
                     {
                         PostID = db.Posts.FirstOrDefault(m => m.Title == "What does inheritance mean").ID,
-                        LabelID = db.Labels.FirstOrDefault(l => l.Title == "c#").ID
+                        LabelID = db.Labels.FirstOrDefault(l => l.Text == "c#").ID
                     }
                     );
                 db.SaveChanges();

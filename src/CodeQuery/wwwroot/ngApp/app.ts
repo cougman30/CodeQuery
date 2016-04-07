@@ -1,6 +1,6 @@
 namespace MyApp {
 
-    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap']).config((
+    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngTagsInput']).config((
         $stateProvider: ng.ui.IStateProvider,
         $urlRouterProvider: ng.ui.IUrlRouterProvider,
         $locationProvider: ng.ILocationProvider

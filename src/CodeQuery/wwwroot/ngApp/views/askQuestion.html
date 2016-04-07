@@ -6,7 +6,7 @@
             <form novalidate ng-submit="controller.SaveQuestion()" name="questionForm">
                 <div class="form-group ctr">
                     <label class="fl">Title</label>
-                    <input type="text" name="title" class="form-control" ng-model="controller.questionToCreate.title" placeholder="type your question here ..." required/>
+                    <input type="text" name="title" class="form-control" ng-model="controller.questionToCreate.title" placeholder="type your question here ..." required />
                     <span ng-show="questionForm.title.$touched && questionForm.title.$error.required" class="error red" style="text-align:center"> --- Question Title is required ---</span>
                 </div>
                 <div class="form-group ctr">
@@ -15,12 +15,37 @@
                     <textarea placeholder="Description ... " name="body" class="form-control description-text" ng-model="controller.questionToCreate.body" required></textarea>
                     <span ng-show="questionForm.body.$touched && questionForm.body.$error.required" class="error red">Description is required</span>
                 </div>
-                <div class="form-group ctr">
-                    <label class="fl">Labels</label>
-                    <input type="text" class="form-control" name="labels" ng-model="controller.questionToCreate.labels" placeholder="enter tags here ..." />
+                <!--<div class="form-group ctr">
+                    <label class="fl">Labels</label> <br />
+                    <input type="text" class="label-input" name="labels" ng-model="controller.tags" placeholder="enter one label at a time ..." />
+                    <input type="button" class="btn form-inline fr" value="Add Label" style="margin-top: 3px" ng-click="controller.AddLabel()" /> <br />
+                </div>-->
+                <div class="form-group">
+                    <tags-input ng-model="controller.tags"></tags-input>
+                    <p>Tags: {{controller.tags}}</p>
                 </div>
-                <div class="form-group pull-right">
-                    <input type="submit" value="Ask Question" class="btn" ng-disabled="questionForm.$invalid" />
+                <!--<div class="">
+                    <span id="labels"></span>
+                    
+
+                    <div class="labelContainer">
+                        <div class="labelRemove">
+                            <i class="fa fa-times"></i>
+                        </div>
+                        <div class="labelText">
+                            <span class="labelText">angular-ui-router</span>
+                        </div>
+                    </div>
+
+
+                </div>-->
+                <br /><br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group pull-right">
+                            <input type="submit" value="Ask Question" class="btn" ng-disabled="questionForm.$invalid" />
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

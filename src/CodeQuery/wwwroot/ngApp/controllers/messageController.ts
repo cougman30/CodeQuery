@@ -93,7 +93,7 @@
             var time2 = new Date();
             var time2ms = time2.getTime();
 
-            var diff = time2ms - time1ms;
+            var diff = time2ms - time1ms - 25200000;
 
             var seconds = (diff / 1000) | 0;
             diff -= seconds * 1000;

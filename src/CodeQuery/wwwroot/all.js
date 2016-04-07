@@ -1,6 +1,6 @@
 var MyApp;
 (function (MyApp) {
-    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap']).config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngTagsInput']).config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         // Define routes
         $stateProvider
             .state('home', {
@@ -234,12 +234,20 @@ var MyApp;
                 this.questionService = questionService;
                 this.$state = $state;
                 this.questionToCreate = {};
+                this.labels = [];
+                this.index = 0;
+                this.tags = [];
             }
             AskQuestionController.prototype.SaveQuestion = function () {
                 var _this = this;
                 //this.questionToCreate.creationDate = Date();
                 //this.questionToCreate.modifiedDate = Date();
                 console.log(this.questionToCreate);
+                for (var i = 0; i < this.tags.length; i++) {
+                    this.labels.push(this.tags[i]);
+                }
+                console.log(this.labels);
+                this.questionToCreate.labels = this.labels;
                 this.questionService.SaveQuestion(this.questionToCreate).then(function () {
                     _this.$state.go('home');
                 });
@@ -327,6 +335,13 @@ var MyApp;
                 this.$state = $state;
                 this.$stateParams = $stateParams;
                 this.GetPost();
+                this.options = new Array;
+                this.options[0] = "css";
+                this.options[1] = "html";
+                this.options[2] = "javascript";
+                this.options[3] = "c#";
+                this.options[4] = "bootstrap";
+                this.options[5] = "angular";
             }
             EditQuestionController.prototype.GetPost = function () {
                 var _this = this;
@@ -469,7 +484,7 @@ var MyApp;
                 var time1ms = time1.getTime();
                 var time2 = new Date();
                 var time2ms = time2.getTime();
-                var diff = time2ms - time1ms;
+                var diff = time2ms - time1ms - 25200000;
                 var seconds = (diff / 1000) | 0;
                 diff -= seconds * 1000;
                 var minutes = (seconds / 60) | 0;
