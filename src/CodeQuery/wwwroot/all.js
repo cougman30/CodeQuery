@@ -9,6 +9,12 @@ var MyApp;
             controller: MyApp.Controllers.HomeController,
             controllerAs: 'controller'
         })
+            .state('hot', {
+            url: '/hot',
+            templateUrl: '/ngApp/views/homeHot.html',
+            controller: MyApp.Controllers.HomeHotController,
+            controllerAs: 'controller'
+        })
             .state('about', {
             url: '/about',
             templateUrl: '/ngApp/views/about.html',
@@ -155,6 +161,10 @@ var MyApp;
             }
             QuestionService.prototype.GetQuestionList = function () {
                 return this.questionResource.query();
+            };
+            QuestionService.prototype.GetHotQuestions = function () {
+                var hotResource = this.$resource('/api/question/hot');
+                return hotResource.query();
             };
             QuestionService.prototype.GetQuestion = function (id) {
                 return this.questionResource.get({ id: id }).$promise;
@@ -387,6 +397,20 @@ var MyApp;
             return FindController;
         }());
         Controllers.FindController = FindController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var HomeHotController = (function () {
+            function HomeHotController(questionService) {
+                this.questionService = questionService;
+                this.posts = this.questionService.GetHotQuestions();
+            }
+            return HomeHotController;
+        }());
+        Controllers.HomeHotController = HomeHotController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;

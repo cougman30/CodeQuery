@@ -126,6 +126,15 @@ namespace CodeQuery.API
             return Ok(list);
         }
 
+        [HttpGet]
+        [Route("hot")]
+        public IActionResult GetHotLists()
+        {
+            var hot = db.GetHotPostList();
+
+            return Ok(hot);
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)

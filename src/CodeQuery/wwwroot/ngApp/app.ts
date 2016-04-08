@@ -13,6 +13,12 @@ namespace MyApp {
                 controller: MyApp.Controllers.HomeController,
                 controllerAs: 'controller'
             })
+            .state('hot', {
+                url: '/hot',
+                templateUrl: '/ngApp/views/homeHot.html',
+                controller: MyApp.Controllers.HomeHotController,
+                controllerAs: 'controller'
+            })
             .state('about', {
                 url: '/about',
                 templateUrl: '/ngApp/views/about.html',

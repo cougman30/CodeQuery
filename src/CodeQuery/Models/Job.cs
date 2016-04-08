@@ -11,5 +11,6 @@ namespace CodeQuery.Models
         public string Title { get; set; }
         public string CompanyName { get; set; }
         public string Location { get; set; }
+        public ICollection<JobLabel> JobLabels { get; set; }
     }
 }

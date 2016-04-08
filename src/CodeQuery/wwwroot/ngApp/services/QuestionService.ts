@@ -14,6 +14,12 @@
             return this.questionResource.query();
         }
 
+        public GetHotQuestions()
+        {
+            var hotResource = this.$resource('/api/question/hot');
+            return hotResource.query();
+        }
+
         public GetQuestion(id)
         {
             return this.questionResource.get({ id: id }).$promise;

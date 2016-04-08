@@ -9,6 +9,7 @@ namespace CodeQuery.Services
         void DeletePost(int id);
         PostReturnViewModel GetPost(int id);
         List<PostListViewModel> GetPostList();
+        List<PostListViewModel> GetHotPostList();
         void SavePost(NewPostViewModel data);
         void VoteUp(int id);
         void VoteDown(int id);

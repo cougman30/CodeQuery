@@ -16,13 +16,14 @@ namespace CodeQuery.Models
         public DbSet<Answer> Answers { get; set; }
         public DbSet<PostLabel> PostLabels { get; set; }
         public DbSet<Job> Jobs { get; set; }
-
+        public DbSet<JobLabel> JobLabels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<PostLabel>().HasKey(x => new { x.PostID, x.LabelID });
+            builder.Entity<JobLabel>().HasKey(x => new { x.JobID, x.LabelID });
 
             //builder.Entity<Reply>().HasOne(r => r.ID).WithMany(b => b.).OnDelete(DeleteBehavior.Restrict);
 

@@ -35,6 +35,24 @@ namespace CodeQuery.Services
             return data;
         }
 
+        public List<PostListViewModel> GetHotPostList()
+        {
+            var data = repo.Query<Post>().Where(p => p.IsActive == true).Select(p => new PostListViewModel
+            {
+                ID = p.ID,
+                Title = p.Title,
+                CreationDate = p.CreationDate,
+                ModifiedDate = p.ModifiedDate,
+                Views = p.Views,
+                ReplyCount = p.Answers.Count,
+                Votes = p.Votes,
+                Labels = p.PostLabels.Select(pl => pl.Label).ToList(),
+                TimeAgo = PostTimeAgo(p.CreationDate)
+            }).OrderByDescending(p => p.ReplyCount).ThenBy(p => p.Views).ToList();
+
+            return data;
+        }
+
         public PostReturnViewModel GetPost(int id)
         {
             var data = repo.Query<Post>().Where(p => p.ID == id).Include(p => p.Replies).Include(p => p.Answers).FirstOrDefault();
@@ -288,7 +306,6 @@ namespace CodeQuery.Services
 
         }
 
-
         public List<Answer> AnswerTimeAgo(List<Answer> answers)
         {
             foreach (var answer in answers)
@@ -370,5 +387,6 @@ namespace CodeQuery.Services
             }
             return answers;
         }
+
     }
 }
