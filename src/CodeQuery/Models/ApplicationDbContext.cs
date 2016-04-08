@@ -13,8 +13,10 @@ namespace CodeQuery.Models
         public DbSet<Post> Posts { get; set; }
         public DbSet<Reply> Replys { get; set; }
         public DbSet<Label> Labels { get; set; }
-        public DbSet<Post> Answers { get; set; }
+        public DbSet<Answer> Answers { get; set; }
         public DbSet<PostLabel> PostLabels { get; set; }
+        public DbSet<Job> Jobs { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

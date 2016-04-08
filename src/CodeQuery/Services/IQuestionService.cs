@@ -13,5 +13,6 @@ namespace CodeQuery.Services
         void VoteUp(int id);
         void VoteDown(int id);
         void AddComment(CommentViewModel data);
+        void ArchivePost(int id);
     }
 }

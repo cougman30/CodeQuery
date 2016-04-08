@@ -16,5 +16,6 @@ namespace CodeQuery.Models
         public DateTime ModifiedDate { get; set; }
         public List<Label> Labels { get; set; }
         public int AnswerCount { get; set; }
+        public string TimeAgo { get; set; }
     }
 }

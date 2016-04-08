@@ -103,6 +103,12 @@ namespace MyApp {
                 controller: MyApp.Controllers.ProfileEditController,
                 controllerAs: 'controller'
             })
+            .state('tags', {
+                url: '/tags',
+                templateUrl: 'ngApp/views/tags.html',
+                controller: MyApp.Controllers.TagsController,
+                controllerAs: 'controller'
+            })
             .state('notFound', {
                 url: '/notFound',
                 templateUrl: '/ngApp/views/notFound.html'

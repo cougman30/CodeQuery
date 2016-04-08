@@ -18,13 +18,14 @@ namespace CodeQuery.Models.ViewModels
         public bool IsActive { get; set; }
         public ICollection<Label> Labels { get; set; }
         public ICollection<Reply> Replies { get; set; }
-        public ICollection<Post> Answers { get; set; }
+        public ICollection<Answer> Answers { get; set; }
         public ICollection<PostLabel> PostLabels { get; set; }
+        public ICollection<Job> Jobs { get; set; }
 
         public PostReturnViewModel()
         {
             this.Replies = new List<Reply>();
-            this.Answers = new List<Post>();
+            this.Answers = new List<Answer>();
             this.Labels = new List<Label>();
         }
     }

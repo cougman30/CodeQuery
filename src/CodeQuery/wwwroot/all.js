@@ -99,6 +99,12 @@ var MyApp;
             controller: MyApp.Controllers.ProfileEditController,
             controllerAs: 'controller'
         })
+            .state('tags', {
+            url: '/tags',
+            templateUrl: 'ngApp/views/tags.html',
+            controller: MyApp.Controllers.TagsController,
+            controllerAs: 'controller'
+        })
             .state('notFound', {
             url: '/notFound',
             templateUrl: '/ngApp/views/notFound.html'
@@ -120,8 +126,17 @@ var MyApp;
                 this.answerResource = this.$resource('/api/answers/:id');
             }
             AnswerService.prototype.SaveAnswer = function (answerToSave) {
+                console.log("SaveAnswer in Service");
                 console.log(answerToSave);
                 return this.answerResource.save(answerToSave).$promise;
+            };
+            AnswerService.prototype.VoteUp = function (vote) {
+                var voteResource = this.$resource("api/answers/vote");
+                return voteResource.save(vote).$promise;
+            };
+            AnswerService.prototype.VoteDown = function (vote) {
+                var voteResource = this.$resource("api/answers/vote");
+                return voteResource.save(vote).$promise;
             };
             return AnswerService;
         }());
@@ -433,11 +448,11 @@ var MyApp;
                 var questionID = this.$stateParams['id'];
                 this.questionService.GetQuestion(questionID).then(function (data) {
                     _this.post = data;
-                    _this.time = data.modifiedDate;
-                    _this.CalculateModifiedTime();
+                    //this.time = data.modifiedDate;
+                    _this.timeStamp = _this.CalculateModifiedTime(data.modifiedDate);
                 });
             };
-            MessageController.prototype.VoteUp = function () {
+            MessageController.prototype.PostVoteUp = function () {
                 var _this = this;
                 var questionID = this.$stateParams['id'];
                 this.vote.id = questionID;
@@ -446,12 +461,28 @@ var MyApp;
                     _this.GetPost();
                 });
             };
-            MessageController.prototype.VoteDown = function () {
+            MessageController.prototype.PostVoteDown = function () {
                 var _this = this;
                 var questionID = this.$stateParams['id'];
                 this.vote.id = questionID;
                 this.vote.text = "VoteDown";
                 this.questionService.VoteUp(this.vote).then(function () {
+                    _this.GetPost();
+                });
+            };
+            MessageController.prototype.AnswerVoteUp = function (id) {
+                var _this = this;
+                this.vote.id = id;
+                this.vote.text = "VoteUp";
+                this.answerService.VoteUp(this.vote).then(function () {
+                    _this.GetPost();
+                });
+            };
+            MessageController.prototype.AnswerVoteDown = function (id) {
+                var _this = this;
+                this.vote.id = id;
+                this.vote.text = "VoteDown";
+                this.answerService.VoteDown(this.vote).then(function () {
                     _this.GetPost();
                 });
             };
@@ -478,9 +509,20 @@ var MyApp;
                     _this.answer.body = "";
                 });
             };
-            MessageController.prototype.CalculateModifiedTime = function () {
-                var time1 = new Date(this.time);
-                console.log(time1);
+            MessageController.prototype.AnswerTime = function (id) {
+                //console.log("AnswerTime");
+                //console.log(id);
+                for (var i = 0; i < this.answer.count; i++) {
+                    if (id == this.answer[i].id) {
+                        console.log("id = " + this.answer[i].id);
+                    }
+                }
+                return (this.CalculateModifiedTime(this.answer.creationDate));
+                //return (id + " mins ago");
+            };
+            MessageController.prototype.CalculateModifiedTime = function (time) {
+                var time1 = new Date(time);
+                //console.log(time1);
                 var time1ms = time1.getTime();
                 var time2 = new Date();
                 var time2ms = time2.getTime();
@@ -502,38 +544,47 @@ var MyApp;
                 //console.log("Seconds = " + seconds);
                 if (weeks > 0) {
                     if (weeks == 1) {
-                        this.timeStamp = weeks + " week ago";
+                        //this.timeStamp = weeks + " week ago";
+                        return (weeks + " week ago");
                     }
                     else {
-                        this.timeStamp = weeks + " weeks ago";
+                        //this.timeStamp = weeks + " weeks ago";
+                        return (weeks + " weeks ago");
                     }
                 }
                 else if (days > 0) {
                     if (days == 1) {
-                        this.timeStamp = days + " day ago";
+                        //this.timeStamp = days + " day ago";
+                        return (days + " day ago");
                     }
                     else {
-                        this.timeStamp = days + " days ago";
+                        //this.timeStamp = days + " days ago";
+                        return (days + " days ago");
                     }
                 }
                 else if (hours > 0) {
                     if (hours == 1) {
-                        this.timeStamp = hours + " hour ago";
+                        //this.timeStamp = hours + " hour ago";
+                        return (hours + " hour ago");
                     }
                     else {
-                        this.timeStamp = hours + " hours ago";
+                        //this.timeStamp = hours + " hours ago";
+                        return (hours + " hours ago");
                     }
                 }
                 else if (minutes > 0) {
                     if (minutes == 1) {
-                        this.timeStamp = minutes + " minute ago";
+                        //this.timeStamp = minutes + " minute ago";
+                        return (minutes + " minute ago");
                     }
                     else {
-                        this.timeStamp = minutes + " minutes ago";
+                        //this.timeStamp = minutes + " minutes ago";
+                        return (minutes + " minutes ago");
                     }
                 }
                 else {
-                    this.timeStamp = seconds + " seconds ago";
+                    //this.timeStamp = seconds + " seconds ago";
+                    return (seconds + " seconds ago");
                 }
             };
             return MessageController;
@@ -614,6 +665,18 @@ var MyApp;
             return SignupController;
         }());
         Controllers.SignupController = SignupController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
+        var TagsController = (function () {
+            function TagsController() {
+            }
+            return TagsController;
+        }());
+        Controllers.TagsController = TagsController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
 //# sourceMappingURL=all.js.map

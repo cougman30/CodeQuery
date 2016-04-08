@@ -19,29 +19,36 @@ namespace CodeQuery.Services
 
         public List<PostListViewModel> GetPostList()
         {
-            var data = repo.Query<Post>().Select(p => new PostListViewModel
+            var data = repo.Query<Post>().Where(p => p.IsActive == true).Select(p => new PostListViewModel
             {
                 ID = p.ID,
                 Title = p.Title,
                 CreationDate = p.CreationDate,
                 ModifiedDate = p.ModifiedDate,
                 Views = p.Views,
-                ReplyCount = p.ReplyCount,
+                ReplyCount = p.Answers.Count,
                 Votes = p.Votes,
-                Labels = p.PostLabels.Select(pl => pl.Label).ToList()
-            }).ToList();
+                Labels = p.PostLabels.Select(pl => pl.Label).ToList(),
+                TimeAgo = PostTimeAgo(p.CreationDate)
+            }).OrderByDescending(p => p.ID).ToList();
 
             return data;
         }
 
         public PostReturnViewModel GetPost(int id)
         {
-            var data = repo.Query<Post>().Where(p => p.ID == id).Include(p => p.Replies).Include(p => p.Answers).FirstOrDefault(); 
+            var data = repo.Query<Post>().Where(p => p.ID == id).Include(p => p.Replies).Include(p => p.Answers).FirstOrDefault();
+            data.Views += 1;
+            repo.SaveChanges();
+
+            var ans = data.Answers.ToList();
+            ans = AnswerTimeAgo(ans);
+
             var post = new PostReturnViewModel
             {
                 ID = data.ID,
                 Title = data.Title,
-                Answers = data.Answers,
+                Answers = ans,
                 Body = data.Body,
                 CreationDate = data.CreationDate,
                 ModifiedDate = data.ModifiedDate,
@@ -96,6 +103,10 @@ namespace CodeQuery.Services
             }
             else
             {
+                var test = repo.Query<Post>().Where(p => p.ID == data.ID).Include(pl => pl.PostLabels).FirstOrDefault();
+                test.PostLabels.Clear();
+                repo.SaveChanges();
+
                 foreach (var name in data.Labels)
                 {
                     var check = repo.Query<Label>().Where(l => l.Text == name.Text).FirstOrDefault();
@@ -189,6 +200,175 @@ namespace CodeQuery.Services
             repo.SaveChanges();
 
             return;
+        }
+
+        public void ArchivePost(int id)
+        {
+            var post = repo.Query<Post>().Where(p => p.ID == id).FirstOrDefault();
+            post.IsActive = false;
+            repo.SaveChanges();
+
+            return;
+        }
+
+        public string PostTimeAgo(DateTime date)
+        {
+            var now = DateTime.Now;
+            var time = now - date;
+            if (time.Minutes < 1)
+            {
+                return (time.Seconds + " seconds ago");
+            }
+            else if (time.Hours < 1)
+            {
+                if (time.Minutes == 1)
+                {
+                    return (time.Minutes + " minute ago");
+                }
+                else
+                {
+                    return (time.Minutes + " minutes ago");
+                }
+            }
+            else if (time.Days < 1)
+            {
+                if (time.Hours == 1)
+                {
+                    return (time.Hours + " hour ago");
+                }
+                else
+                {
+                    return (time.Hours + " hours ago");
+                }
+            }
+            else if (time.Days < 7)
+            {
+                if (time.Days == 1)
+                {
+                    return (time.Days + " day ago");
+                }
+                else
+                {
+                    return (time.Days + " days ago");
+                }
+            }
+            else if (time.Days < 30)
+            {
+                if ((time.Days / 7) == 1)
+                {
+                    return ((time.Days / 7) + " week ago");
+                }
+                else
+                {
+                    return ((time.Days / 7) + " weeks ago");
+                }
+            }
+            else if (time.Days < 365)
+            {
+                if ((time.Days / 30) == 1)
+                {
+                    return ((time.Days / 30) + " month ago");
+                }
+                else
+                {
+                    return ((time.Days / 30) + " months ago");
+                }
+            }
+            else
+            {
+                if ((time.Days / 365) == 1)
+                {
+                    return ((time.Days / 365) + " year ago");
+                }
+                else
+                {
+                    return ((time.Days / 365) + " years ago");
+                }
+            }
+
+        }
+
+
+        public List<Answer> AnswerTimeAgo(List<Answer> answers)
+        {
+            foreach (var answer in answers)
+            {
+                answer.TimeAgo = PostTimeAgo(answer.CreationDate);
+                //var now = DateTime.Now;
+                //var time = now - answer.CreationDate;
+                //if (time.Minutes < 1)
+                //{
+                //    answer.TimeAgo = time.Seconds + " seconds ago";
+                //}
+                //else if (time.Hours < 1)
+                //{
+                //    if (time.Minutes == 1)
+                //    {
+                //        answer.TimeAgo = time.Minutes + " minute ago";
+                //    }
+                //    else
+                //    {
+                //        answer.TimeAgo = time.Minutes + " minutes ago";
+                //    }
+                //}
+                //else if (time.Days < 1)
+                //{
+                //    if (time.Hours == 1)
+                //    {
+                //        answer.TimeAgo = time.Hours + " hour ago";
+                //    }
+                //    else
+                //    {
+                //        answer.TimeAgo = time.Hours + " hours ago";
+                //    }
+                //}
+                //else if (time.Days < 7)
+                //{
+                //    if (time.Days == 1)
+                //    {
+                //        answer.TimeAgo = time.Days + " days ago";
+                //    }
+                //    else
+                //    {
+                //        answer.TimeAgo = time.Days + " days ago";
+                //    }
+                //}
+                //else if (time.Days < 30)
+                //{
+                //    if ((time.Days / 7) == 1)
+                //    {
+                //        answer.TimeAgo = (time.Days / 7) + " week ago";
+                //    }
+                //    else
+                //    {
+                //        answer.TimeAgo = (time.Days / 7) + " weeks ago";
+                //    }
+                //}
+                //else if (time.Days < 365)
+                //{
+                //    if ((time.Days / 30) == 1)
+                //    {
+                //        answer.TimeAgo = (time.Days / 30) + " month ago";
+                //    }
+                //    else
+                //    {
+                //        answer.TimeAgo = (time.Days / 30) + " months ago";
+                //    }
+                //}
+                //else
+                //{
+                //    if ((time.Days / 365) == 1)
+                //    {
+                //        answer.TimeAgo = (time.Days / 365) + " year ago";
+                //    }
+                //    else
+                //    {
+                //        answer.TimeAgo = (time.Days / 365) + " years ago";
+                //    }
+                //}
+
+            }
+            return answers;
         }
     }
 }

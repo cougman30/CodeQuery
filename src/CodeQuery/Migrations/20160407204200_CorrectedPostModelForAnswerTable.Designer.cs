@@ -8,9 +8,10 @@ using CodeQuery.Models;
 namespace CodeQuery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160407204200_CorrectedPostModelForAnswerTable")]
+    partial class CorrectedPostModelForAnswerTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -28,8 +29,6 @@ namespace CodeQuery.Migrations
                     b.Property<DateTime>("ModifiedDate");
 
                     b.Property<int?>("PostID");
-
-                    b.Property<string>("TimeAgo");
 
                     b.Property<int>("Votes");
 
@@ -82,20 +81,6 @@ namespace CodeQuery.Migrations
                         .HasAnnotation("Relational:Name", "UserNameIndex");
 
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
-                });
-
-            modelBuilder.Entity("CodeQuery.Models.Job", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CompanyName");
-
-                    b.Property<string>("Location");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("ID");
                 });
 
             modelBuilder.Entity("CodeQuery.Models.Label", b =>

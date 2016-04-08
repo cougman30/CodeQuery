@@ -26,6 +26,7 @@
                         </div>
                         <div class="votes-cell-text">
                             Votes
+                            <!--{{post}}-->
                         </div>
                     </td>
                     <td class="answer-cell" ng-class="{{post.replyCount}} > 20">
@@ -56,7 +57,7 @@
                         <button uib-popover-html="htmlPopover" class="btn btn-default">HTML Popover</button>
                         <div class="post-title-user-info">
                             <div class="post-timestamp">
-                                asked 1 min ago
+                                asked {{post.timeAgo}}
                             </div>
                             <div class="post-user-info">
                                 <a href="#" uib-popover="View Profile" popover-trigger="mouseenter" popover-animation="true">Andrey</a> <span title="reputation score"> 7379</span>

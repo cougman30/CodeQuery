@@ -12,9 +12,8 @@ namespace CodeQuery.Models
         public DateTime CreationDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public int Votes { get; set; }
-        public ICollection<Label> Labels { get; set; }
+        public string TimeAgo { get; set; }
         public ICollection<Reply> Replies { get; set; }
-        public ICollection<PostLabel> PostLabels { get; set; }
 
         public Answer()
         {

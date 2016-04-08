@@ -44,6 +44,7 @@ namespace CodeQuery
             //used for Generic Repositories
             services.AddScoped<IGenericRepository, GenericRepository>();
             services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IAnswerService, AnswerService>();
 
             // Add framework services.
             services.AddEntityFramework()

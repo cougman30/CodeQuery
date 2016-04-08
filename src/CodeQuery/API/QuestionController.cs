@@ -183,7 +183,8 @@ namespace CodeQuery.API
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            db.DeletePost(id);
+            //db.DeletePost(id);
+            db.ArchivePost(id);
 
             return Ok();
         }

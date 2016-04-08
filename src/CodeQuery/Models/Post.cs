@@ -17,13 +17,13 @@ namespace CodeQuery.Models
         public int Votes { get; set; }
         public bool IsActive { get; set; }
         public ICollection<Reply> Replies { get; set; }
-        public ICollection<Post> Answers { get; set; }
+        public ICollection<Answer> Answers { get; set; }
         public ICollection<PostLabel> PostLabels { get; set; }
 
         public Post()
         {
             this.Replies = new List<Reply>();
-            this.Answers = new List<Post>();
+            this.Answers = new List<Answer>();
         }
     }
 }

@@ -8,9 +8,10 @@ using CodeQuery.Models;
 namespace CodeQuery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160407203343_ChangedAppDBContextForAnswersTable")]
+    partial class ChangedAppDBContextForAnswersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -26,10 +27,6 @@ namespace CodeQuery.Migrations
                     b.Property<DateTime>("CreationDate");
 
                     b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<int?>("PostID");
-
-                    b.Property<string>("TimeAgo");
 
                     b.Property<int>("Votes");
 
@@ -84,24 +81,12 @@ namespace CodeQuery.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
-            modelBuilder.Entity("CodeQuery.Models.Job", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CompanyName");
-
-                    b.Property<string>("Location");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("ID");
-                });
-
             modelBuilder.Entity("CodeQuery.Models.Label", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AnswerID");
 
                     b.Property<string>("Text");
 
@@ -121,6 +106,8 @@ namespace CodeQuery.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
+                    b.Property<int?>("PostID");
+
                     b.Property<int>("ReplyCount");
 
                     b.Property<string>("Title");
@@ -137,6 +124,8 @@ namespace CodeQuery.Migrations
                     b.Property<int>("PostID");
 
                     b.Property<int>("LabelID");
+
+                    b.Property<int?>("AnswerID");
 
                     b.HasKey("PostID", "LabelID");
                 });
@@ -241,7 +230,14 @@ namespace CodeQuery.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("CodeQuery.Models.Answer", b =>
+            modelBuilder.Entity("CodeQuery.Models.Label", b =>
+                {
+                    b.HasOne("CodeQuery.Models.Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerID");
+                });
+
+            modelBuilder.Entity("CodeQuery.Models.Post", b =>
                 {
                     b.HasOne("CodeQuery.Models.Post")
                         .WithMany()
@@ -250,6 +246,10 @@ namespace CodeQuery.Migrations
 
             modelBuilder.Entity("CodeQuery.Models.PostLabel", b =>
                 {
+                    b.HasOne("CodeQuery.Models.Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerID");
+
                     b.HasOne("CodeQuery.Models.Label")
                         .WithMany()
                         .HasForeignKey("LabelID");

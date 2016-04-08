@@ -8,9 +8,10 @@ using CodeQuery.Models;
 namespace CodeQuery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160407203538_ChangedAnswerModel")]
+    partial class ChangedAnswerModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -26,10 +27,6 @@ namespace CodeQuery.Migrations
                     b.Property<DateTime>("CreationDate");
 
                     b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<int?>("PostID");
-
-                    b.Property<string>("TimeAgo");
 
                     b.Property<int>("Votes");
 
@@ -84,20 +81,6 @@ namespace CodeQuery.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
-            modelBuilder.Entity("CodeQuery.Models.Job", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CompanyName");
-
-                    b.Property<string>("Location");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("ID");
-                });
-
             modelBuilder.Entity("CodeQuery.Models.Label", b =>
                 {
                     b.Property<int>("ID")
@@ -120,6 +103,8 @@ namespace CodeQuery.Migrations
                     b.Property<bool>("IsActive");
 
                     b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<int?>("PostID");
 
                     b.Property<int>("ReplyCount");
 
@@ -241,7 +226,7 @@ namespace CodeQuery.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("CodeQuery.Models.Answer", b =>
+            modelBuilder.Entity("CodeQuery.Models.Post", b =>
                 {
                     b.HasOne("CodeQuery.Models.Post")
                         .WithMany()
