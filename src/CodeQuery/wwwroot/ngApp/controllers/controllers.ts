@@ -14,14 +14,18 @@ namespace MyApp.Controllers
 
         constructor(private questionService: MyApp.Services.QuestionService)
         {
-            this.questionService.GetQuestionList().then((data) =>
+            var list = this.questionService.GetQuestionList().then((data) =>
             {
-                this.posts = data;
                 this.numOfPosts = data.length;
-                //console.log(this.posts);
-                console.log(this.numOfPosts);
+            });;
+            this.posts = this.questionService.GetShortQuestionList(this.currentPage);//.then((data) =>
+            //{
+            //    this.posts = data;
+            //    this.numOfPosts = data.length;
+            //    //console.log(this.posts);
+            //    console.log(this.numOfPosts);
 
-            });
+            //});
             //htmlPopover = trustAsHtml('<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content');
         }
 

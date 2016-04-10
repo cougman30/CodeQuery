@@ -36,7 +36,7 @@
             var searchResource = this.$resource('/api/question/search');
             console.log("SearchQuestions Service");
             console.log(text);
-            return searchResource.query(text);
+            return searchResource.query({ text: text });
         }
 
         public SaveQuestion(questionToSave)

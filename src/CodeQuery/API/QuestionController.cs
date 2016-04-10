@@ -172,9 +172,9 @@ namespace CodeQuery.API
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("{text}")]
         [Route("search")]
-        public IActionResult SearchQuestions([FromBody]SearchViewModel text)
+        public IActionResult SearchQuestions(string text)
         {
             var searchList = db.GetSearchResults(text);
             return Ok(searchList);

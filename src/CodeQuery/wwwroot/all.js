@@ -34,7 +34,7 @@ var MyApp;
             controllerAs: 'controller'
         })
             .state('search', {
-            url: '/search',
+            url: '/search/:text',
             templateUrl: '/ngApp/views/search.html',
             controller: MyApp.Controllers.SearchController,
             controllerAs: 'controller'
@@ -128,279 +128,6 @@ var MyApp;
     });
 })(MyApp || (MyApp = {}));
 /// <reference path="ngapp/app.ts" />
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var AccountService = (function () {
-            function AccountService($q, $http, $window) {
-                this.$q = $q;
-                this.$http = $http;
-                this.$window = $window;
-                // in case we are redirected from a social provider
-                // we need to check if we are authenticated.
-                this.checkAuthentication();
-            }
-            // Store access token and claims in browser session storage
-            AccountService.prototype.storeUserInfo = function (userInfo) {
-                // store user name
-                this.$window.sessionStorage.setItem('userName', userInfo.userName);
-                // store claims
-                this.$window.sessionStorage.setItem('claims', JSON.stringify(userInfo.claims));
-            };
-            AccountService.prototype.getUserName = function () {
-                return this.$window.sessionStorage.getItem('userName');
-            };
-            AccountService.prototype.getClaim = function (type) {
-                var allClaims = JSON.parse(this.$window.sessionStorage.getItem('claims'));
-                return allClaims ? allClaims[type] : null;
-            };
-            AccountService.prototype.login = function (loginUser) {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    _this.$http.post('/api/account/login', loginUser).then(function (result) {
-                        _this.storeUserInfo(result.data);
-                        resolve();
-                    }).catch(function (result) {
-                        var messages = _this.flattenValidation(result.data);
-                        reject(messages);
-                    });
-                });
-            };
-            AccountService.prototype.register = function (userLogin) {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    _this.$http.post('/api/account/register', userLogin)
-                        .then(function (result) {
-                        _this.storeUserInfo(result.data);
-                        resolve(result);
-                    })
-                        .catch(function (result) {
-                        var messages = _this.flattenValidation(result.data);
-                        reject(messages);
-                    });
-                });
-            };
-            AccountService.prototype.logout = function () {
-                // clear all of session storage (including claims)
-                this.$window.sessionStorage.clear();
-                // logout on the server
-                return this.$http.post('/api/account/logout', null);
-            };
-            AccountService.prototype.isLoggedIn = function () {
-                return this.$window.sessionStorage.getItem('userName');
-            };
-            // associate external login (e.g., Twitter) with local user account
-            AccountService.prototype.registerExternal = function (email) {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    _this.$http.post('/api/account/externalLoginConfirmation', { email: email })
-                        .then(function (result) {
-                        _this.storeUserInfo(result.data);
-                        resolve(result);
-                    })
-                        .catch(function (result) {
-                        // flatten error messages
-                        var messages = _this.flattenValidation(result.data);
-                        reject(messages);
-                    });
-                });
-            };
-            AccountService.prototype.getExternalLogins = function () {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    var url = "api/Account/getExternalLogins?returnUrl=%2FexternalLogin&generateState=true";
-                    _this.$http.get(url).then(function (result) {
-                        resolve(result.data);
-                    }).catch(function (result) {
-                        reject(result);
-                    });
-                });
-            };
-            // checks whether the current user is authenticated on the server and returns user info
-            AccountService.prototype.checkAuthentication = function () {
-                var _this = this;
-                this.$http.get('/api/account/checkAuthentication')
-                    .then(function (result) {
-                    if (result.data) {
-                        _this.storeUserInfo(result.data);
-                    }
-                });
-            };
-            AccountService.prototype.confirmEmail = function (userId, code) {
-                var _this = this;
-                return this.$q(function (resolve, reject) {
-                    var data = {
-                        userId: userId,
-                        code: code
-                    };
-                    _this.$http.post('/api/account/confirmEmail', data).then(function (result) {
-                        resolve(result.data);
-                    }).catch(function (result) {
-                        reject(result);
-                    });
-                });
-            };
-            // extract access token from response
-            AccountService.prototype.parseOAuthResponse = function (token) {
-                var results = {};
-                token.split('&').forEach(function (item) {
-                    var pair = item.split('=');
-                    results[pair[0]] = pair[1];
-                });
-                return results;
-            };
-            AccountService.prototype.flattenValidation = function (modelState) {
-                var messages = [];
-                for (var prop in modelState) {
-                    messages = messages.concat(modelState[prop]);
-                }
-                return messages;
-            };
-            return AccountService;
-        }());
-        Services.AccountService = AccountService;
-        angular.module('MyApp').service('accountService', AccountService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var AnswerService = (function () {
-            function AnswerService($resource) {
-                this.$resource = $resource;
-                this.answerResource = this.$resource('/api/answers/:id');
-            }
-            AnswerService.prototype.SaveAnswer = function (answerToSave) {
-                console.log("SaveAnswer in Service");
-                console.log(answerToSave);
-                return this.answerResource.save(answerToSave).$promise;
-            };
-            AnswerService.prototype.VoteUp = function (vote) {
-                var voteResource = this.$resource("api/answers/vote");
-                return voteResource.save(vote).$promise;
-            };
-            AnswerService.prototype.VoteDown = function (vote) {
-                var voteResource = this.$resource("api/answers/vote");
-                return voteResource.save(vote).$promise;
-            };
-            return AnswerService;
-        }());
-        Services.AnswerService = AnswerService;
-        angular.module("MyApp").service("answerService", AnswerService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var QuestionService = (function () {
-            function QuestionService($resource) {
-                this.$resource = $resource;
-                this.questionResource = this.$resource('/api/question/:id');
-            }
-            QuestionService.prototype.GetQuestionList = function () {
-                return this.questionResource.query().$promise;
-            };
-            QuestionService.prototype.GetShortQuestionList = function (num) {
-                var shortResource = this.$resource('/api/question/get');
-                return shortResource.query({ num: num });
-            };
-            QuestionService.prototype.GetHotQuestions = function () {
-                var hotResource = this.$resource('/api/question/hot');
-                return hotResource.query();
-            };
-            QuestionService.prototype.GetQuestion = function (id) {
-                return this.questionResource.get({ id: id }).$promise;
-            };
-            QuestionService.prototype.SearchQuestions = function (text) {
-                var searchResource = this.$resource('/api/question/search');
-                console.log("SearchQuestions Service");
-                console.log(text);
-                return searchResource.query(text);
-            };
-            QuestionService.prototype.SaveQuestion = function (questionToSave) {
-                //let newObj = {};
-                //console.log(questionToSave);
-                //console.log("Service - " + newObj);
-                return this.questionResource.save(questionToSave).$promise;
-            };
-            QuestionService.prototype.DeleteQuestion = function (id) {
-                //console.log("Delete Question in QuestionService.ts");
-                //console.log(id);
-                return this.questionResource.delete({ id: id }).$promise;
-            };
-            QuestionService.prototype.VoteUp = function (vote) {
-                //console.log("VoteUp in Service");
-                //console.log(vote);
-                //console.log(typeof vote);
-                var voteResource = this.$resource("/api/question/vote");
-                return voteResource.save(vote).$promise;
-            };
-            QuestionService.prototype.VoteDown = function (vote) {
-                var voteResource = this.$resource("api/question/vote");
-                return voteResource.save(vote).$promise;
-            };
-            QuestionService.prototype.AddComment = function (comment) {
-                var commentResource = this.$resource("api/question/comment");
-                return commentResource.save(comment).$promise;
-            };
-            return QuestionService;
-        }());
-        Services.QuestionService = QuestionService;
-        angular.module("MyApp").service('questionService', QuestionService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var MovieService = (function () {
-            function MovieService($resource) {
-                this.MovieResource = $resource('/api/movies');
-            }
-            MovieService.prototype.listMovies = function () {
-                return this.MovieResource.query();
-            };
-            return MovieService;
-        }());
-        Services.MovieService = MovieService;
-        angular.module('MyApp').service('movieService', MovieService);
-    })(Services = MyApp.Services || (MyApp.Services = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Filters;
-    (function (Filters) {
-        function HotTopic() {
-            return function (input, length) {
-                var result = [];
-                angular.forEach(input, function (value, key) {
-                    angular.forEach(value, function (value2, key2) {
-                        if (value2 >= length) {
-                            result.push(value2);
-                        }
-                    });
-                });
-                return result;
-            };
-        }
-        function Recent() {
-            return function (input, length) {
-                var result = [];
-                angular.forEach(input, function (value, key) {
-                    angular.forEach(value, function (value2, key2) {
-                        if (value2 >= length) {
-                            result.push(value2);
-                        }
-                    });
-                });
-                return result;
-            };
-        }
-    })(Filters = MyApp.Filters || (MyApp.Filters = {}));
-})(MyApp || (MyApp = {}));
 var MyApp;
 (function (MyApp) {
     var Controllers;
@@ -547,12 +274,17 @@ var MyApp;
                 this.numOfPosts = 0;
                 this.currentPage = 1;
                 this.maxSize = 3;
-                this.questionService.GetQuestionList().then(function (data) {
-                    _this.posts = data;
+                var list = this.questionService.GetQuestionList().then(function (data) {
                     _this.numOfPosts = data.length;
-                    //console.log(this.posts);
-                    console.log(_this.numOfPosts);
                 });
+                ;
+                this.posts = this.questionService.GetShortQuestionList(this.currentPage); //.then((data) =>
+                //{
+                //    this.posts = data;
+                //    this.numOfPosts = data.length;
+                //    //console.log(this.posts);
+                //    console.log(this.numOfPosts);
+                //});
                 //htmlPopover = trustAsHtml('<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content');
             }
             HomeController.prototype.setPage = function (pageNo) {
@@ -944,14 +676,19 @@ var MyApp;
     var Controllers;
     (function (Controllers) {
         var SearchController = (function () {
-            function SearchController(questionService) {
+            function SearchController(questionService, $stateParams) {
                 this.questionService = questionService;
-                this.search = {};
-                this.search.text = "";
-                this.search.label = "";
+                this.$stateParams = $stateParams;
+                var searchText = this.$stateParams['text'];
+                console.log("SearchController");
+                this.posts = this.questionService.SearchQuestions(searchText);
+                console.log(searchText);
+                this.search = "";
+                this.label = "";
             }
             SearchController.prototype.SearchQuestions = function () {
                 console.log(this.search);
+                console.log(this.label);
                 this.posts = this.questionService.SearchQuestions(this.search);
             };
             return SearchController;
@@ -982,5 +719,278 @@ var MyApp;
         }());
         Controllers.TagsController = TagsController;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Filters;
+    (function (Filters) {
+        function HotTopic() {
+            return function (input, length) {
+                var result = [];
+                angular.forEach(input, function (value, key) {
+                    angular.forEach(value, function (value2, key2) {
+                        if (value2 >= length) {
+                            result.push(value2);
+                        }
+                    });
+                });
+                return result;
+            };
+        }
+        function Recent() {
+            return function (input, length) {
+                var result = [];
+                angular.forEach(input, function (value, key) {
+                    angular.forEach(value, function (value2, key2) {
+                        if (value2 >= length) {
+                            result.push(value2);
+                        }
+                    });
+                });
+                return result;
+            };
+        }
+    })(Filters = MyApp.Filters || (MyApp.Filters = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var AccountService = (function () {
+            function AccountService($q, $http, $window) {
+                this.$q = $q;
+                this.$http = $http;
+                this.$window = $window;
+                // in case we are redirected from a social provider
+                // we need to check if we are authenticated.
+                this.checkAuthentication();
+            }
+            // Store access token and claims in browser session storage
+            AccountService.prototype.storeUserInfo = function (userInfo) {
+                // store user name
+                this.$window.sessionStorage.setItem('userName', userInfo.userName);
+                // store claims
+                this.$window.sessionStorage.setItem('claims', JSON.stringify(userInfo.claims));
+            };
+            AccountService.prototype.getUserName = function () {
+                return this.$window.sessionStorage.getItem('userName');
+            };
+            AccountService.prototype.getClaim = function (type) {
+                var allClaims = JSON.parse(this.$window.sessionStorage.getItem('claims'));
+                return allClaims ? allClaims[type] : null;
+            };
+            AccountService.prototype.login = function (loginUser) {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    _this.$http.post('/api/account/login', loginUser).then(function (result) {
+                        _this.storeUserInfo(result.data);
+                        resolve();
+                    }).catch(function (result) {
+                        var messages = _this.flattenValidation(result.data);
+                        reject(messages);
+                    });
+                });
+            };
+            AccountService.prototype.register = function (userLogin) {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    _this.$http.post('/api/account/register', userLogin)
+                        .then(function (result) {
+                        _this.storeUserInfo(result.data);
+                        resolve(result);
+                    })
+                        .catch(function (result) {
+                        var messages = _this.flattenValidation(result.data);
+                        reject(messages);
+                    });
+                });
+            };
+            AccountService.prototype.logout = function () {
+                // clear all of session storage (including claims)
+                this.$window.sessionStorage.clear();
+                // logout on the server
+                return this.$http.post('/api/account/logout', null);
+            };
+            AccountService.prototype.isLoggedIn = function () {
+                return this.$window.sessionStorage.getItem('userName');
+            };
+            // associate external login (e.g., Twitter) with local user account
+            AccountService.prototype.registerExternal = function (email) {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    _this.$http.post('/api/account/externalLoginConfirmation', { email: email })
+                        .then(function (result) {
+                        _this.storeUserInfo(result.data);
+                        resolve(result);
+                    })
+                        .catch(function (result) {
+                        // flatten error messages
+                        var messages = _this.flattenValidation(result.data);
+                        reject(messages);
+                    });
+                });
+            };
+            AccountService.prototype.getExternalLogins = function () {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    var url = "api/Account/getExternalLogins?returnUrl=%2FexternalLogin&generateState=true";
+                    _this.$http.get(url).then(function (result) {
+                        resolve(result.data);
+                    }).catch(function (result) {
+                        reject(result);
+                    });
+                });
+            };
+            // checks whether the current user is authenticated on the server and returns user info
+            AccountService.prototype.checkAuthentication = function () {
+                var _this = this;
+                this.$http.get('/api/account/checkAuthentication')
+                    .then(function (result) {
+                    if (result.data) {
+                        _this.storeUserInfo(result.data);
+                    }
+                });
+            };
+            AccountService.prototype.confirmEmail = function (userId, code) {
+                var _this = this;
+                return this.$q(function (resolve, reject) {
+                    var data = {
+                        userId: userId,
+                        code: code
+                    };
+                    _this.$http.post('/api/account/confirmEmail', data).then(function (result) {
+                        resolve(result.data);
+                    }).catch(function (result) {
+                        reject(result);
+                    });
+                });
+            };
+            // extract access token from response
+            AccountService.prototype.parseOAuthResponse = function (token) {
+                var results = {};
+                token.split('&').forEach(function (item) {
+                    var pair = item.split('=');
+                    results[pair[0]] = pair[1];
+                });
+                return results;
+            };
+            AccountService.prototype.flattenValidation = function (modelState) {
+                var messages = [];
+                for (var prop in modelState) {
+                    messages = messages.concat(modelState[prop]);
+                }
+                return messages;
+            };
+            return AccountService;
+        }());
+        Services.AccountService = AccountService;
+        angular.module('MyApp').service('accountService', AccountService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var AnswerService = (function () {
+            function AnswerService($resource) {
+                this.$resource = $resource;
+                this.answerResource = this.$resource('/api/answers/:id');
+            }
+            AnswerService.prototype.SaveAnswer = function (answerToSave) {
+                console.log("SaveAnswer in Service");
+                console.log(answerToSave);
+                return this.answerResource.save(answerToSave).$promise;
+            };
+            AnswerService.prototype.VoteUp = function (vote) {
+                var voteResource = this.$resource("api/answers/vote");
+                return voteResource.save(vote).$promise;
+            };
+            AnswerService.prototype.VoteDown = function (vote) {
+                var voteResource = this.$resource("api/answers/vote");
+                return voteResource.save(vote).$promise;
+            };
+            return AnswerService;
+        }());
+        Services.AnswerService = AnswerService;
+        angular.module("MyApp").service("answerService", AnswerService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var QuestionService = (function () {
+            function QuestionService($resource) {
+                this.$resource = $resource;
+                this.questionResource = this.$resource('/api/question/:id');
+            }
+            QuestionService.prototype.GetQuestionList = function () {
+                return this.questionResource.query().$promise;
+            };
+            QuestionService.prototype.GetShortQuestionList = function (num) {
+                var shortResource = this.$resource('/api/question/get');
+                return shortResource.query({ num: num });
+            };
+            QuestionService.prototype.GetHotQuestions = function () {
+                var hotResource = this.$resource('/api/question/hot');
+                return hotResource.query();
+            };
+            QuestionService.prototype.GetQuestion = function (id) {
+                return this.questionResource.get({ id: id }).$promise;
+            };
+            QuestionService.prototype.SearchQuestions = function (text) {
+                var searchResource = this.$resource('/api/question/search');
+                console.log("SearchQuestions Service");
+                console.log(text);
+                return searchResource.query({ text: text });
+            };
+            QuestionService.prototype.SaveQuestion = function (questionToSave) {
+                //let newObj = {};
+                //console.log(questionToSave);
+                //console.log("Service - " + newObj);
+                return this.questionResource.save(questionToSave).$promise;
+            };
+            QuestionService.prototype.DeleteQuestion = function (id) {
+                //console.log("Delete Question in QuestionService.ts");
+                //console.log(id);
+                return this.questionResource.delete({ id: id }).$promise;
+            };
+            QuestionService.prototype.VoteUp = function (vote) {
+                //console.log("VoteUp in Service");
+                //console.log(vote);
+                //console.log(typeof vote);
+                var voteResource = this.$resource("/api/question/vote");
+                return voteResource.save(vote).$promise;
+            };
+            QuestionService.prototype.VoteDown = function (vote) {
+                var voteResource = this.$resource("api/question/vote");
+                return voteResource.save(vote).$promise;
+            };
+            QuestionService.prototype.AddComment = function (comment) {
+                var commentResource = this.$resource("api/question/comment");
+                return commentResource.save(comment).$promise;
+            };
+            return QuestionService;
+        }());
+        Services.QuestionService = QuestionService;
+        angular.module("MyApp").service('questionService', QuestionService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var MovieService = (function () {
+            function MovieService($resource) {
+                this.MovieResource = $resource('/api/movies');
+            }
+            MovieService.prototype.listMovies = function () {
+                return this.MovieResource.query();
+            };
+            return MovieService;
+        }());
+        Services.MovieService = MovieService;
+        angular.module('MyApp').service('movieService', MovieService);
+    })(Services = MyApp.Services || (MyApp.Services = {}));
 })(MyApp || (MyApp = {}));
 //# sourceMappingURL=all.js.map

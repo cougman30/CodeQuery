@@ -38,7 +38,7 @@ namespace MyApp {
                 controllerAs: 'controller'
             })
             .state('search', {
-                url: '/search',
+                url: '/search/:text',
                 templateUrl: '/ngApp/views/search.html',
                 controller: MyApp.Controllers.SearchController,
                 controllerAs: 'controller'

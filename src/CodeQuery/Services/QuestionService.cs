@@ -17,9 +17,9 @@ namespace CodeQuery.Services
             this.repo = _repo;
         }
 
-        public List<PostListViewModel> GetSearchResults(SearchViewModel data)
+        public List<PostListViewModel> GetSearchResults(string text)
         {
-            var list = repo.Query<Post>().Where(p => p.Title.Contains(data.Text) && p.IsActive == true).Select(p => new PostListViewModel
+            var list = repo.Query<Post>().Where(p => p.Title.Contains(text) && p.IsActive == true).Select(p => new PostListViewModel
             {
                 ID = p.ID,
                 Title = p.Title,
