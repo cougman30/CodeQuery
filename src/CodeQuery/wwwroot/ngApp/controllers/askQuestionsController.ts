@@ -20,13 +20,13 @@
         {
             //this.questionToCreate.creationDate = Date();
             //this.questionToCreate.modifiedDate = Date();
-            console.log(this.questionToCreate);
+            //console.log(this.questionToCreate);
 
             for (var i = 0; i < this.tags.length; i++)
             {
                 this.labels.push(this.tags[i]);
             }
-            console.log(this.labels);
+            //console.log(this.labels);
 
             this.questionToCreate.labels = this.labels;
 

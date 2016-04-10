@@ -17,6 +17,24 @@ namespace CodeQuery.Services
             this.repo = _repo;
         }
 
+        public List<PostListViewModel> GetSearchResults(SearchViewModel data)
+        {
+            var list = repo.Query<Post>().Where(p => p.Title.Contains(data.Text) && p.IsActive == true).Select(p => new PostListViewModel
+            {
+                ID = p.ID,
+                Title = p.Title,
+                CreationDate = p.CreationDate,
+                ModifiedDate = p.ModifiedDate,
+                Views = p.Views,
+                ReplyCount = p.Answers.Count,
+                Votes = p.Votes,
+                Labels = p.PostLabels.Select(pl => pl.Label).ToList(),
+                TimeAgo = PostTimeAgo(p.CreationDate)
+            }).ToList();
+            return list;
+
+        }
+
         public List<PostListViewModel> GetPostList()
         {
             var data = repo.Query<Post>().Where(p => p.IsActive == true).Select(p => new PostListViewModel
@@ -31,6 +49,26 @@ namespace CodeQuery.Services
                 Labels = p.PostLabels.Select(pl => pl.Label).ToList(),
                 TimeAgo = PostTimeAgo(p.CreationDate)
             }).OrderByDescending(p => p.ID).ToList();
+
+            return data;
+        }
+
+        public List<PostListViewModel> GetShortList(int num)
+        {
+            var data = repo.Query<Post>().Where(p => p.IsActive == true).Select(p => new PostListViewModel
+            {
+                ID = p.ID,
+                Title = p.Title,
+                CreationDate = p.CreationDate,
+                ModifiedDate = p.ModifiedDate,
+                Views = p.Views,
+                ReplyCount = p.Answers.Count,
+                Votes = p.Votes,
+                Labels = p.PostLabels.Select(pl => pl.Label).ToList(),
+                TimeAgo = PostTimeAgo(p.CreationDate)
+            }).OrderByDescending(p => p.ID).ToList();
+
+            data = data.Skip(10 * (num - 1)).Take(10).ToList();
 
             return data;
         }

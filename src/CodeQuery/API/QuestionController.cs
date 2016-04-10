@@ -126,6 +126,14 @@ namespace CodeQuery.API
             return Ok(list);
         }
 
+        [HttpGet("{num}")]
+        [Route("get")]
+        public IActionResult GetShortList(int num)
+        {
+            var list = db.GetShortList(num);
+            return Ok(list);
+        }
+
         [HttpGet]
         [Route("hot")]
         public IActionResult GetHotLists()
@@ -162,6 +170,14 @@ namespace CodeQuery.API
                 }
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public IActionResult SearchQuestions([FromBody]SearchViewModel text)
+        {
+            var searchList = db.GetSearchResults(text);
+            return Ok(searchList);
         }
 
         [HttpPost]

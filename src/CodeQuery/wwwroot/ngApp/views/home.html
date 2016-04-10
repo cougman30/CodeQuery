@@ -5,6 +5,38 @@
 
 <h1>Welcome to Code Query!</h1>-->
 
+<h6><code>boundary-link-numbers</code> set to <code>true</code> and <code>rotate</code> defaulted to <code>true</code>:</h6>
+<uib-pagination total-items="controller.numOfPosts" ng-model="controller.currentPage" max-size="controller.maxSize" class="pagination-sm" boundary-link-numbers="true" ng-change="controller.GetSearchResults()"></uib-pagination>
+
+<!--<button class="btn" ng-click="controller.testPage()">Test</button>-->
+
+
+
+<!--<div>
+    <table class="table">
+        <tr ng-repeat="row in controller.data.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+            <td>{{row.name}}</td>
+            <td>{{row.id}}</td>
+        </tr>
+    </table>
+    View <select ng-model="controller.viewby" ng-change="controller.setItemsPerPage(controller.viewby)"><option>3</option><option>5</option><option>10</option><option>20</option><option>30</option><option>40</option><option>50</option></select> records at a time.
+
+    <pagination total-items="totalItems" ng-model="controller.currentPage" ng-change="controller.pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
+    <pre>The selected page no: {{controller.currentPage}}</pre>
+    <button class="btn btn-info" ng-click="controller.setPage(3)">Set current page to: 3</button>
+
+    <hr />
+    <h4>Pager</h4>
+    <pager total-items="totalItems" ng-model="controller.currentPage" items-per-page="itemsPerPage"></pager>
+
+    <hr />
+    <h4>Limit the maximum visible buttons</h4>
+    <pagination total-items="totalItems" ng-model="controller.currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="itemsPerPage"></pagination>
+    <pagination total-items="totalItems" ng-model="controller.currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="itemsPerPage"></pagination>
+    <pre>Page: {{controller.currentPage}} / {{controller.numPages}}</pre>
+</div>-->
+
+
 
 <div class="fluid-container message-container">
     <div class="row">
@@ -47,7 +79,7 @@
                     </td>
                     <td class="post-cell">
                         <div class="post-title">
-                            <a href="/message/{{post.id}}">{{post.title}}</a>
+                            <a href="/message/{{post.id}}">{{post.title}}</a> - ID = {{post.id}}
                         </div>
                         <div class="post-title-labels">
                             <span ng-repeat="label in post.labels" uib-popover="Search for questions about {{label.text}}" popover-trigger="mouseenter" popover-animation="true" class="label label-default" style="margin-right: 5px">
@@ -68,7 +100,7 @@
             </table>
         </div>
     </div>
-    <div class="pages">
+    <!--<div class="pages">
         <nav>
             <ul class="pagination">
                 <li>
@@ -88,7 +120,8 @@
                 </li>
             </ul>
         </nav>
-    </div>
+    </div>-->
+    
 </div>
 
 

@@ -37,6 +37,12 @@ namespace MyApp {
                 controller: MyApp.Controllers.EditQuestionController,
                 controllerAs: 'controller'
             })
+            .state('search', {
+                url: '/search',
+                templateUrl: '/ngApp/views/search.html',
+                controller: MyApp.Controllers.SearchController,
+                controllerAs: 'controller'
+            })
             .state('deleteQuestion', {
                 url: '/deleteMessage/:id',
                 templateUrl: '/ngApp/views/deleteQuestion.html',

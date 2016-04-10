@@ -21,7 +21,7 @@
                     <input type="button" class="btn form-inline fr" value="Add Label" style="margin-top: 3px" ng-click="controller.AddLabel()" /> <br />
                 </div>-->
                 <div class="form-group">
-                    <tags-input ng-model="controller.tags"></tags-input>
+                    <tags-input ng-model="controller.tags" min-length="2"></tags-input>
                     <p>Tags: {{controller.tags}}</p>
                 </div>
                 <!--<div class="">

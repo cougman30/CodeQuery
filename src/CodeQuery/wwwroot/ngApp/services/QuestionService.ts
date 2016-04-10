@@ -11,7 +11,13 @@
 
         public GetQuestionList()
         {
-            return this.questionResource.query();
+            return this.questionResource.query().$promise;
+        }
+
+        public GetShortQuestionList(num)
+        {
+            var shortResource = this.$resource('/api/question/get');
+            return shortResource.query({ num: num });
         }
 
         public GetHotQuestions()
@@ -23,6 +29,14 @@
         public GetQuestion(id)
         {
             return this.questionResource.get({ id: id }).$promise;
+        }
+
+        public SearchQuestions(text)
+        {
+            var searchResource = this.$resource('/api/question/search');
+            console.log("SearchQuestions Service");
+            console.log(text);
+            return searchResource.query(text);
         }
 
         public SaveQuestion(questionToSave)
