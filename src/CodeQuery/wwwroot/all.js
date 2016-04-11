@@ -737,6 +737,9 @@ var MyApp;
             function SearchLabelsController(questionService, $stateParams) {
                 this.questionService = questionService;
                 this.$stateParams = $stateParams;
+                this.numOfPosts = 0;
+                this.currentPage = 1;
+                this.maxSize = 3;
                 var label = this.$stateParams['text'];
                 console.log(label);
                 if (label == "c") {
