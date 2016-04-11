@@ -43,6 +43,12 @@ namespace MyApp {
                 controller: MyApp.Controllers.SearchController,
                 controllerAs: 'controller'
             })
+            .state('labelSearch', {
+                url: '/labels/:text',
+                templateUrl: '/ngApp/views/searchLabels.html',
+                controller: MyApp.Controllers.SearchLabelsController,
+                controllerAs: 'controller'
+            })
             .state('deleteQuestion', {
                 url: '/deleteMessage/:id',
                 templateUrl: '/ngApp/views/deleteQuestion.html',

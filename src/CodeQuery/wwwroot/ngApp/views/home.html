@@ -5,7 +5,7 @@
 
 <h1>Welcome to Code Query!</h1>-->
 
-<h6><code>boundary-link-numbers</code> set to <code>true</code> and <code>rotate</code> defaulted to <code>true</code>:</h6>
+<!--<h6><code>boundary-link-numbers</code> set to <code>true</code> and <code>rotate</code> defaulted to <code>true</code>:</h6>-->
 <uib-pagination total-items="controller.numOfPosts" ng-model="controller.currentPage" max-size="controller.maxSize" class="pagination-sm" boundary-link-numbers="true" ng-change="controller.GetSearchResults()" ng-cloak></uib-pagination>
 
 <!--<button class="btn" ng-click="controller.testPage()">Test</button>-->
@@ -83,10 +83,10 @@
                         </div>
                         <div class="post-title-labels">
                             <span ng-repeat="label in post.labels" uib-popover="Search for questions about {{label.text}}" popover-trigger="mouseenter" popover-animation="true" class="label label-default" style="margin-right: 5px">
-                                <a class="link-label" href="/search/{{label.text}}">{{label.text}}</a>
+                                <a class="link-label" href="/labels/{{label.text}}">{{label.text}}</a>
                             </span>
                         </div>
-                        <button uib-popover-html="htmlPopover" class="btn btn-default">HTML Popover</button>
+                        <!--<button uib-popover-html="htmlPopover" class="btn btn-default">HTML Popover</button>-->
                         <div class="post-title-user-info">
                             <div class="post-timestamp">
                                 asked {{post.timeAgo}}

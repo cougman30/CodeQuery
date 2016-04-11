@@ -34,9 +34,19 @@
         public SearchQuestions(text)
         {
             var searchResource = this.$resource('/api/question/search');
+            //console.log("SearchQuestions Service");
+            //console.log(text);
+            return searchResource.query({ text: text });
+        }
+
+        public SearchLabels(text)
+        {
+            let labelResource = this.$resource('/api/question/searchLabel');
             console.log("SearchQuestions Service");
             console.log(text);
-            return searchResource.query({ text: text });
+            text = "&#35";
+            text = "c#";
+            return labelResource.query({ text: text });
         }
 
         public SaveQuestion(questionToSave)

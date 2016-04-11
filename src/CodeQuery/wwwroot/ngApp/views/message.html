@@ -19,7 +19,8 @@
                             <p>{{controller.post.body}}</p>
                         </div>
                         <div class="post-taglist">
-                            <span class="label label-default" ng-repeat="label in controller.post.labels" style="margin-right: 5px"><a class="link-label" href="#">{{label.text}}</a></span>
+                            <span class="label label-default" ng-repeat="label in controller.post.labels" style="margin-right: 5px"><a class="link-label" 
+                                href="/labels/{{label.text}}">{{label.text}}</a></span>
                         </div>
                         <div class="after-post">
                             <table class="after-post-table">

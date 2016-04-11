@@ -50,6 +50,38 @@ namespace MyApp.Controllers
     export class AboutController
     {
         public message = 'Hello from the about page!';
+
+        constructor(private $uibModal: ng.ui.bootstrap.IModalService)
+        {
+
+        }
+
+        public showSignUpModal()
+        {
+            this.$uibModal.open({
+                templateUrl: '/ngApp/views/signup.html',
+                controller: MyApp.Controllers.SignUpDialogController,
+                controllerAs: 'modal',
+                //size: "sm"
+                //resolve: {
+                //    //size: 'sm'
+                //}
+            });
+        }
     }
 
+    export class SignUpDialogController
+    {
+        constructor(private $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance)
+        {
+            //console.log("inside the SignUpDialogController");
+        }
+
+        public OK()
+        {
+            this.$uibModalInstance.close();
+        }
+    }
+
+    angular.module('MyApp').controller("SignUpDialogController", SignUpDialogController);
 }

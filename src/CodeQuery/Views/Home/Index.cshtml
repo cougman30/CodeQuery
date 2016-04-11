@@ -17,7 +17,7 @@
     <link href="~/css/notfound.css" rel="stylesheet" />
     <base href="/" />
 </head>
-<body>
+<body ng-controller="AccountController as controller">
 
     @*<h1>CodeQuery</h1>
         <div>
@@ -98,7 +98,7 @@
 
                 <div class="left-links">
                     <a href="/askQuestion"><button class="navBar-link btn">Ask a Question</button></a>
-                    <a href="/search"><button class="navBar-link btn">Search for Questions</button></a>
+                    <a href="/search/"><button class="navBar-link btn">Search for Questions</button></a>
 
                     @*<div class="dropdown">
                         <button class="btn navBar-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -153,9 +153,9 @@
                 </div>
 
                 <div class="navbar-search-container">
-                    <form role="search" class="form-inline">
+                    <form role="search" class="form-inline" ng-submit="controller.Search()">
                         <div class="navbar-search">
-                            <input type="text" placeholder="Search" id="navBarSearch" class="form-control" />
+                            <input type="text" placeholder="Search" id="navBarSearch" class="form-control" ng-model="controller.text"/>
                             <button class="btn" type="submit">Search</button>
                         </div>
                     </form>

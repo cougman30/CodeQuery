@@ -35,6 +35,24 @@ namespace CodeQuery.Services
 
         }
 
+        public List<PostListViewModel> GetLabelSearchResults(string text)
+        {
+            var list = repo.Query<PostLabel>().Where(pl => pl.Label.Text == text).Select(pl => pl.Post).ToList();
+            var results = list.Where(p => p.IsActive == true).Select(p => new PostListViewModel {
+                ID = p.ID,
+                Title = p.Title,
+                CreationDate = p.CreationDate,
+                ModifiedDate = p.ModifiedDate,
+                Views = p.Views,
+                ReplyCount = p.Answers.Count,
+                Votes = p.Votes,
+                //Labels = p.PostLabels.Select(pl => pl.Label).ToList(),
+                Labels = repo.Query<PostLabel>().Where(l => l.PostID == p.ID).Select(l => l.Label).ToList(),
+                TimeAgo = PostTimeAgo(p.CreationDate)
+            }).ToList();
+            return results;
+        }
+
         public List<PostListViewModel> GetPostList()
         {
             var data = repo.Query<Post>().Where(p => p.IsActive == true).Select(p => new PostListViewModel

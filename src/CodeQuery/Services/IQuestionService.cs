@@ -16,6 +16,7 @@ namespace CodeQuery.Services
         void AddComment(CommentViewModel data);
         void ArchivePost(int id);
         List<PostListViewModel> GetSearchResults(string text);
+        List<PostListViewModel> GetLabelSearchResults(string text);
         List<PostListViewModel> GetShortList(int num);
     }
 }

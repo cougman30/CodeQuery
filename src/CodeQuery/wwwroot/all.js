@@ -39,6 +39,12 @@ var MyApp;
             controller: MyApp.Controllers.SearchController,
             controllerAs: 'controller'
         })
+            .state('labelSearch', {
+            url: '/labels/:text',
+            templateUrl: '/ngApp/views/searchLabels.html',
+            controller: MyApp.Controllers.SearchLabelsController,
+            controllerAs: 'controller'
+        })
             .state('deleteQuestion', {
             url: '/deleteMessage/:id',
             templateUrl: '/ngApp/views/deleteQuestion.html',
@@ -137,9 +143,12 @@ var MyApp;
                 var _this = this;
                 this.accountService = accountService;
                 this.$location = $location;
+                this.text = "";
                 this.getExternalLogins().then(function (results) {
                     _this.externalLogins = results;
                 });
+                console.log("Search");
+                //console.log(this.text);
             }
             AccountController.prototype.getUserName = function () {
                 return this.accountService.getUserName();
@@ -156,6 +165,10 @@ var MyApp;
             };
             AccountController.prototype.getExternalLogins = function () {
                 return this.accountService.getExternalLogins();
+            };
+            AccountController.prototype.Search = function () {
+                console.log("Search");
+                console.log(this.text);
             };
             return AccountController;
         }());
@@ -301,12 +314,32 @@ var MyApp;
         }());
         Controllers.HomeController = HomeController;
         var AboutController = (function () {
-            function AboutController() {
+            function AboutController($uibModal) {
+                this.$uibModal = $uibModal;
                 this.message = 'Hello from the about page!';
             }
+            AboutController.prototype.showSignUpModal = function () {
+                this.$uibModal.open({
+                    templateUrl: '/ngApp/views/signup.html',
+                    controller: MyApp.Controllers.SignUpDialogController,
+                    controllerAs: 'modal',
+                });
+            };
             return AboutController;
         }());
         Controllers.AboutController = AboutController;
+        var SignUpDialogController = (function () {
+            function SignUpDialogController($uibModalInstance) {
+                this.$uibModalInstance = $uibModalInstance;
+                //console.log("inside the SignUpDialogController");
+            }
+            SignUpDialogController.prototype.OK = function () {
+                this.$uibModalInstance.close();
+            };
+            return SignUpDialogController;
+        }());
+        Controllers.SignUpDialogController = SignUpDialogController;
+        angular.module('MyApp').controller("SignUpDialogController", SignUpDialogController);
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;
@@ -700,6 +733,29 @@ var MyApp;
 (function (MyApp) {
     var Controllers;
     (function (Controllers) {
+        var SearchLabelsController = (function () {
+            function SearchLabelsController(questionService, $stateParams) {
+                this.questionService = questionService;
+                this.$stateParams = $stateParams;
+                var label = this.$stateParams['text'];
+                console.log(label);
+                if (label == "c") {
+                    label = "c#";
+                }
+                this.posts = this.questionService.SearchLabels(label);
+            }
+            SearchLabelsController.prototype.length = function () {
+                console.log(this.posts.length);
+            };
+            return SearchLabelsController;
+        }());
+        Controllers.SearchLabelsController = SearchLabelsController;
+    })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
+})(MyApp || (MyApp = {}));
+var MyApp;
+(function (MyApp) {
+    var Controllers;
+    (function (Controllers) {
         var SignupController = (function () {
             function SignupController() {
             }
@@ -940,9 +996,17 @@ var MyApp;
             };
             QuestionService.prototype.SearchQuestions = function (text) {
                 var searchResource = this.$resource('/api/question/search');
+                //console.log("SearchQuestions Service");
+                //console.log(text);
+                return searchResource.query({ text: text });
+            };
+            QuestionService.prototype.SearchLabels = function (text) {
+                var labelResource = this.$resource('/api/question/searchLabel');
                 console.log("SearchQuestions Service");
                 console.log(text);
-                return searchResource.query({ text: text });
+                text = "&#35";
+                text = "c#";
+                return labelResource.query({ text: text });
             };
             QuestionService.prototype.SaveQuestion = function (questionToSave) {
                 //let newObj = {};

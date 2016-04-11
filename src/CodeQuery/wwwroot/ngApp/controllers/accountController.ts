@@ -3,6 +3,7 @@
 
     export class AccountController
     {
+        public text = "";
         public externalLogins;
 
         public getUserName()
@@ -37,6 +38,16 @@
             {
                 this.externalLogins = results;
             });
+
+            console.log("Search");
+            //console.log(this.text);
+
+        }
+
+        public Search()
+        {
+            console.log("Search");
+            console.log(this.text);
         }
     }
 

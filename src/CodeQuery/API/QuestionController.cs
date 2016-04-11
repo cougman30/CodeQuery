@@ -180,6 +180,14 @@ namespace CodeQuery.API
             return Ok(searchList);
         }
 
+        [HttpGet("{text}")]
+        [Route("searchLabel")]
+        public IActionResult LabelQuestions(string text)
+        {
+            var searchList = db.GetLabelSearchResults(text);
+            return Ok(searchList);
+        }
+
         [HttpPost]
         [Route("comment")]
         public IActionResult Comment([FromBody]CommentViewModel data)
