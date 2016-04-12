@@ -11,12 +11,52 @@
 
         public GetQuestionList()
         {
-            return this.questionResource.query();
+            return this.questionResource.query().$promise;
+        }
+
+        public GetShortQuestionList(num)
+        {
+            var shortResource = this.$resource('/api/question/get');
+            return shortResource.query({ num: num });
+        }
+
+        public GetHotQuestions()
+        {
+            var hotResource = this.$resource('/api/question/hot');
+            return hotResource.query();
         }
 
         public GetQuestion(id)
         {
             return this.questionResource.get({ id: id }).$promise;
+        }
+
+        public SearchQuestions(text)
+        {
+            var searchResource = this.$resource('/api/question/search');
+            //console.log("SearchQuestions Service");
+            //console.log(text);
+            return searchResource.query({ text: text });
+        }
+
+        public SearchLabels(text)
+        {
+            let labelResource = this.$resource('/api/question/searchLabel');
+            //console.log("SearchQuestions Service");
+            //console.log(text);
+            //text = "&#35";
+            //text = "c#";
+            return labelResource.query({ text: text }).$promise;
+        }
+
+        public SearchLabelsShort(text, num)
+        {
+            let labelResource = this.$resource('/api/question/searchLabelShort');
+            //console.log("SearchQuestions Service");
+            //console.log(text);
+            //text = "&#35";
+            //text = "c#";
+            return labelResource.query({ text: text }, num);
         }
 
         public SaveQuestion(questionToSave)

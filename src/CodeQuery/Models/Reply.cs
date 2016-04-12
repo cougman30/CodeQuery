@@ -11,5 +11,10 @@ namespace CodeQuery.Models
         public string Message { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public Reply()
+        {
+            this.Message = "";
+        }
     }
 }

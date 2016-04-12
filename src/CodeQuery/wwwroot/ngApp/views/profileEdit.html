@@ -41,9 +41,9 @@
                         <input type="text" value="robert@frost.com" class="profile-input" /><br />
                         <label class="text-muted profile-label">Birthday:</label>
                         <p class="calen-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="{{controller.format}}"
+                            <input type="text" class="form-control well well-sm" uib-datepicker-popup="{{controller.format}}"
                                    ng-model="controller.dt" is-open="status.opened"
-                                   show-weeks="true" class="well well-sm" custom-class="getDayClass(date,mode)"
+                                   show-weeks="true" custom-class="getDayClass(date,mode)"
                                    close-text="Close" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default"

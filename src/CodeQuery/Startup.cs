@@ -14,6 +14,7 @@ using CodeQuery.Services;
 using Newtonsoft.Json.Serialization;
 using CodeQuery.Repositories;
 
+
 namespace CodeQuery
 {
     public class Startup
@@ -41,7 +42,19 @@ namespace CodeQuery
         public void ConfigureServices(IServiceCollection services)
         {
             //used for Generic Repositories
-            services.AddScoped<IGenericRepository, GenericRepository>(); 
+            services.AddScoped<IGenericRepository, GenericRepository>();
+            services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IAnswerService, AnswerService>();
+
+            //password settings
+            services.AddIdentity<ApplicationUser, IdentityRole>(o =>
+            {
+                o.Password.RequireDigit = false;
+                o.Password.RequiredLength = 4;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonLetterOrDigit = false;
+            });
 
             // Add framework services.
             services.AddEntityFramework()
@@ -114,6 +127,8 @@ namespace CodeQuery
                      defaults: new { controller = "Home", action = "Index" }
                 );
             });
+
+            
         }
 
         // Entry point for the application.

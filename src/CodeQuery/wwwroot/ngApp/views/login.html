@@ -36,11 +36,11 @@
                     <hr class="or-hr" style="border: 1px solid #ccc;"/>
                     <div id="or">OR</div>
                 </div>
-                <form id="login-form">
-                    <label for="email">Email</label><br />
-                    <input type="email" name="email" id="email" placeholder="you@example.org" /><br />
+                <form id="login-form" ng-submit="controller.login()">
+                    <label for="email">Username</label><br />
+                    <input type="text" class="form-control" id="email" placeholder="example@example.com" ng-model="controller.loginUser.email"/><br />
                     <label for="password">Password</label><br />
-                    <input type="password" id="password" name="password" placeholder="********" /><br />
+                    <input type="password" id="password" class="form-control" placeholder="********" ng-model="controller.loginUser.password"/><br />
                     <a href="#" id="forgot-pw" class="forgot">forgot?</a><br />
                     <input type="submit" id="submit-button" name="submit-button" value="Log in" class="btn login-button" />
                 </form>

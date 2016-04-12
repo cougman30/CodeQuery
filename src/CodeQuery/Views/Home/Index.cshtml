@@ -4,6 +4,7 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://mbenford.github.io/ngTagsInput/css/ng-tags-input.min.css" />
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/css/question.css" rel="stylesheet" />
     <link href="~/css/home.css" rel="stylesheet" />
@@ -16,7 +17,7 @@
     <link href="~/css/notfound.css" rel="stylesheet" />
     <base href="/" />
 </head>
-<body>
+<body ng-controller="AccountController as controller">
 
     @*<h1>CodeQuery</h1>
         <div>
@@ -97,6 +98,7 @@
 
                 <div class="left-links">
                     <a href="/askQuestion"><button class="navBar-link btn">Ask a Question</button></a>
+                    <a href="/search/"><button class="navBar-link btn">Search for Questions</button></a>
 
                     @*<div class="dropdown">
                         <button class="btn navBar-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -140,19 +142,21 @@
                         Welcome Back, Michael <span class="caret"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                        <li role="menuitem"><a href="/login">Login <span class="badge">4</span></a></li>
-                        <li role="menuitem"><a href="/signup">Signup</a></li>
+                        <li role="menuitem"><a ng-click="controller.showLoginModal()">Login <span class="badge">4</span></a></li>
+                        <li role="menuitem"><a ng-click="controller.showSignUpModal()">Signup</a></li>
                         <li role="menuitem"><a href="/about">You Questions</a></li>
                         <li class="divider"></li>
                         <li role="menuitem"><a href="/profile">Profile</a></li>
+                        <li role="menuitem"><a href="/tags">Tags</a></li>
                         <li role="menuitem"><a href="/notFound">Not Found</a></li>
+                        <li role="menuitem"><a ng-click="controller.logout()">Logout</a></li>
                     </ul>
                 </div>
 
                 <div class="navbar-search-container">
-                    <form role="search" class="form-inline">
+                    <form role="search" class="form-inline" ng-submit="controller.Search()">
                         <div class="navbar-search">
-                            <input type="text" placeholder="Search" id="navBarSearch" class="form-control" />
+                            <input type="text" placeholder="Search" id="navBarSearch" class="form-control" ng-model="controller.text"/>
                             <button class="btn" type="submit">Search</button>
                         </div>
                     </form>
@@ -179,7 +183,7 @@
                     <ul>
                         <li class="btn btn-info"><a href="/question" class="headerBadge">Questions</a></li>
                         <li class="btn btn-info">Jobs</li>
-                        <li class="btn btn-info">Tags</li>
+                        <li class="btn btn-info"><a href="/tags" class="headerBadge">Tags</a></li>
                         <li class="btn btn-info">Users</li>
                         <li class="btn btn-info">Badges</li>
                         <li class="btn btn-info"><a href="/message" class="headerBadge">Messages</a></li>
@@ -202,6 +206,7 @@
     <script src="~/lib/angular-resource/angular-resource.min.js"></script>
     <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="~/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="http://mbenford.github.io/ngTagsInput/js/ng-tags-input.min.js"></script>
 
     <!-- Controllers -->
     <script src="~/all.js"></script>

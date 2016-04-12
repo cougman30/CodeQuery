@@ -9,9 +9,9 @@
                 <tr>
                     <td class="vote-cell">
                         <div class="vote">
-                            <a title="This is a great answer!" class="vote-up" ng-click="controller.VoteUp()"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                            <a title="This is a great answer!" class="vote-up" ng-click="controller.PostVoteUp()"><span class="glyphicon glyphicon-chevron-up"></span></a>
                             <span class="vote-count">{{controller.post.votes}}</span>
-                            <a title="This is a bad answer!" class="vote-down" ng-click="controller.VoteDown()"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                            <a title="This is a bad answer!" class="vote-down" ng-click="controller.PostVoteDown()"><span class="glyphicon glyphicon-chevron-down"></span></a>
                         </div>
                     </td>
                     <td class="post-cell">
@@ -19,7 +19,8 @@
                             <p>{{controller.post.body}}</p>
                         </div>
                         <div class="post-taglist">
-                            <span class="label label-default" ng-repeat="label in controller.post.labels" style="margin-right: 5px"><a class="link-label" href="#">{{label.title}}</a></span>
+                            <span class="label label-default" ng-repeat="label in controller.post.labels" style="margin-right: 5px"><a class="link-label" 
+                                href="/labels/{{label.text}}">{{label.text}}</a></span>
                         </div>
                         <div class="after-post">
                             <table class="after-post-table">
@@ -27,7 +28,7 @@
                                     <tr>
                                         <td class="post-share-edit">
                                             <a href="#" title="short link to this question">Share</a> / 
-                                            <a href="/editMesage/{{controller.post.postID}}" title="revise and improve this post">Edit</a>
+                                            <a href="/editMesage/{{controller.post.id}}" title="revise and improve this post">Edit</a>
                                         </td>
                                         <td class="post-signature-owner">
                                             <div class="user-info">
@@ -78,11 +79,90 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
 
+<!-- Start Answers -->
+
+<div class="row">
+    <div class="col-md-12 col-md-offset-1">
+        <h4>Answers #</h4>
     </div>
 </div>
+
+<div class="row" ng-repeat="answer in controller.post.answers">
+    <div class="col-md-12">
+        <div class="post-container">
+            <table class="table">
+                <tr>
+                    <td class="vote-cell">
+                        <div class="vote">
+                            <a title="This is a great answer!" class="vote-up" ng-click="controller.AnswerVoteUp(answer.id)"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                            <span class="vote-count">{{answer.votes}}</span>
+                            <a title="This is a bad answer!" class="vote-down" ng-click="controller.AnswerVoteDown(answer.id)"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                        </div>
+                    </td>
+                    <td class="post-cell">
+                        <div class="post-text">
+                            <p>{{answer.body}}</p>
+                        </div>
+                        <div class="after-post">
+                            <table class="after-post-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="post-share-edit">
+                                            <a href="#" title="short link to this question">Share</a> /
+                                            <a href="/editMesage/{{answer.id}}" title="revise and improve this post">Edit</a>
+                                        </td>
+                                        <td class="post-signature-owner">
+                                            <div class="user-info">
+                                                <div class="user-action-time">
+                                                    <span id="user-action-timestamp" title="2016-03-25 20:11:40Z">answered {{answer.timeAgo}}</span>
+                                                </div>
+                                                <div class="user-avatar">
+                                                    <a href="#" title="user details">
+                                                        <div class="avatar-wrapper">
+                                                            <span class="glyphicon glyphicon-user"></span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="user-details">
+                                                    <a href="#">David.80004</a>
+                                                    <div class="user-flair">
+                                                        <span class="rep-score">1</span>
+                                                        <span class="user-badge badge">2</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="vote-cell vote-cell-empty"></td>
+                    <td id="post-comments-link-container">
+                        <div class="post-comments-link">
+                            <a href="#" class="post-add-comment"><span ng-click="controller.ToggleComment()">add a comment</span></a>
+                        </div>
+                        <div ng-show="(controller.addComment == true)">
+                            <form ng-submit="controller.AddComment()">
+                                <textarea class="input-lg answer-input" rows="6" placeholder="Enter your comment here ..." ng-model="controller.comment.body"></textarea>
+                                <input type="submit" value="add comment" class="btn" />
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat="post in answer.replies">
+                    <td class="vote-cell vote-cell-empty"></td>
+                    <td class="reply-cells"><span class="glyphicon glyphicon-menu-right reply-icon"></span>{{post.message}} - <span class="reply-user-info"><a href="#">OrangeDog</a>  {{post.modifiedDate|date:'MMMM dd @ h:mma'}}</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- End repeated Answers -->
 
 <div class="row">
     <div class="col-md-12 answer-container">

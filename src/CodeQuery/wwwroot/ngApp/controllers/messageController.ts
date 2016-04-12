@@ -27,13 +27,13 @@
             this.questionService.GetQuestion(questionID).then((data) =>
             {
                 this.post = data;
-                this.time = data.modifiedDate;
+                //this.time = data.modifiedDate;
                 
-                this.CalculateModifiedTime();
+                this.timeStamp = this.CalculateModifiedTime(data.modifiedDate);
             });
         }
 
-        VoteUp()
+        PostVoteUp()
         {
             let questionID = this.$stateParams['id'];
             this.vote.id = questionID;
@@ -44,12 +44,32 @@
             });
         }
 
-        VoteDown()
+        PostVoteDown()
         {
             let questionID = this.$stateParams['id'];
             this.vote.id = questionID;
             this.vote.text = "VoteDown";
             this.questionService.VoteUp(this.vote).then(() =>
+            {
+                this.GetPost();
+            });
+        }
+
+        AnswerVoteUp(id)
+        {
+            this.vote.id = id;
+            this.vote.text = "VoteUp";
+            this.answerService.VoteUp(this.vote).then(() =>
+            {
+                this.GetPost();
+            });
+        }
+
+        AnswerVoteDown(id)
+        {
+            this.vote.id = id;
+            this.vote.text = "VoteDown";
+            this.answerService.VoteDown(this.vote).then(() =>
             {
                 this.GetPost();
             });
@@ -84,16 +104,34 @@
             });
         }
 
-        CalculateModifiedTime()
+        AnswerTime(id)
         {
-            var time1 = new Date(this.time);
-            console.log(time1);
+            //console.log("AnswerTime");
+            //console.log(id);
+
+            for (var i = 0; i < this.answer.count; i++)
+            {
+                if (id == this.answer[i].id)
+                {
+                    console.log("id = " + this.answer[i].id);
+                }
+            }
+
+            return (this.CalculateModifiedTime(this.answer.creationDate));
+
+            //return (id + " mins ago");
+        }
+
+        CalculateModifiedTime(time)
+        {
+            var time1 = new Date(time);
+            //console.log(time1);
             var time1ms = time1.getTime();
 
             var time2 = new Date();
             var time2ms = time2.getTime();
 
-            var diff = time2ms - time1ms;
+            var diff = time2ms - time1ms - 25200000;
 
             var seconds = (diff / 1000) | 0;
             diff -= seconds * 1000;
@@ -116,23 +154,27 @@
             {
                 if (weeks == 1)
                 {
-                    this.timeStamp = weeks + " week ago";
+                    //this.timeStamp = weeks + " week ago";
+                    return (weeks + " week ago");
                 }
                 else
                 {
-                    this.timeStamp = weeks + " weeks ago";
+                    //this.timeStamp = weeks + " weeks ago";
+                    return (weeks + " weeks ago");
                 }
             }
             else if (days > 0)
             {
                 if (days == 1)
                 {
-                    this.timeStamp = days + " day ago";
+                    //this.timeStamp = days + " day ago";
+                    return (days + " day ago");
 
                 }
                 else
                 {
-                    this.timeStamp = days + " days ago";
+                    //this.timeStamp = days + " days ago";
+                    return (days + " days ago");
 
                 }
             }
@@ -140,12 +182,14 @@
             {
                 if (hours == 1)
                 {   
-                    this.timeStamp = hours + " hour ago";
+                    //this.timeStamp = hours + " hour ago";
+                    return (hours + " hour ago");
 
                 }
                 else
                 {
-                    this.timeStamp = hours + " hours ago";
+                    //this.timeStamp = hours + " hours ago";
+                    return (hours + " hours ago");
 
                 }
             }
@@ -153,18 +197,21 @@
             {
                 if (minutes == 1)
                 {
-                    this.timeStamp = minutes + " minute ago";
+                    //this.timeStamp = minutes + " minute ago";
+                    return (minutes + " minute ago");
 
                 }
                 else
                 {
-                    this.timeStamp = minutes + " minutes ago";
+                    //this.timeStamp = minutes + " minutes ago";
+                    return (minutes + " minutes ago");
 
                 }
             }
             else
             {
-                this.timeStamp = seconds + " seconds ago";
+                //this.timeStamp = seconds + " seconds ago";
+                return (seconds + " seconds ago");
             }
         }
     }

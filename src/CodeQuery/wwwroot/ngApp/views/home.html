@@ -5,13 +5,45 @@
 
 <h1>Welcome to Code Query!</h1>-->
 
+<!--<h6><code>boundary-link-numbers</code> set to <code>true</code> and <code>rotate</code> defaulted to <code>true</code>:</h6>-->
+<uib-pagination total-items="controller.numOfPosts" ng-model="controller.currentPage" max-size="controller.maxSize" class="pagination-sm" boundary-link-numbers="true" ng-change="controller.GetSearchResults()" ng-cloak></uib-pagination>
+
+<!--<button class="btn" ng-click="controller.testPage()">Test</button>-->
+
+
+
+<!--<div>
+    <table class="table">
+        <tr ng-repeat="row in controller.data.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+            <td>{{row.name}}</td>
+            <td>{{row.id}}</td>
+        </tr>
+    </table>
+    View <select ng-model="controller.viewby" ng-change="controller.setItemsPerPage(controller.viewby)"><option>3</option><option>5</option><option>10</option><option>20</option><option>30</option><option>40</option><option>50</option></select> records at a time.
+
+    <pagination total-items="totalItems" ng-model="controller.currentPage" ng-change="controller.pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
+    <pre>The selected page no: {{controller.currentPage}}</pre>
+    <button class="btn btn-info" ng-click="controller.setPage(3)">Set current page to: 3</button>
+
+    <hr />
+    <h4>Pager</h4>
+    <pager total-items="totalItems" ng-model="controller.currentPage" items-per-page="itemsPerPage"></pager>
+
+    <hr />
+    <h4>Limit the maximum visible buttons</h4>
+    <pagination total-items="totalItems" ng-model="controller.currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="itemsPerPage"></pagination>
+    <pagination total-items="totalItems" ng-model="controller.currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="itemsPerPage"></pagination>
+    <pre>Page: {{controller.currentPage}} / {{controller.numPages}}</pre>
+</div>-->
+
+
 
 <div class="fluid-container message-container">
     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#all" aria-controls="all" role="tab" data-toggle="tab">All Questions</a></li>
-                <li role="presentation" class="pull-right"><a href="#hot" aria-controls="hot" role="tab" data-toggle="tab">Hot Topics</a></li>
+                <li role="presentation" class="pull-right"><a href="/hot" aria-controls="hot" role="tab" data-toggle="tab">Hot Topics</a></li>
                 <li role="presentation" class="pull-right"><a href="#recent" aria-controls="recent" role="tab" data-toggle="tab">Most Recent Questions</a></li>
             </ul>
         </div>
@@ -19,13 +51,14 @@
     <div class="row">
         <div class="col-md-12">
             <table class="table">
-                <tr ng-repeat="post in controller.posts">
+                <tr ng-repeat="post in controller.posts" ng-cloak>
                     <td class="votes-cell">
                         <div class="votes-cell-num">
                             {{post.votes}}
                         </div>
                         <div class="votes-cell-text">
                             Votes
+                            <!--{{post}}-->
                         </div>
                     </td>
                     <td class="answer-cell" ng-class="{{post.replyCount}} > 20">
@@ -46,17 +79,17 @@
                     </td>
                     <td class="post-cell">
                         <div class="post-title">
-                            <a href="/message/{{post.id}}">{{post.title}}</a>
+                            <a href="/message/{{post.id}}">{{post.title}}</a> - ID = {{post.id}}
                         </div>
                         <div class="post-title-labels">
-                            <span ng-repeat="label in post.labels" uib-popover="Search for questions about {{label.title}}" popover-trigger="mouseenter" popover-animation="true" class="label label-default" style="margin-right: 5px">
-                                <a class="link-label" href="#">{{label.title}}</a>
+                            <span ng-repeat="label in post.labels" uib-popover="Search for questions about {{label.text}}" popover-trigger="mouseenter" popover-animation="true" class="label label-default" style="margin-right: 5px">
+                                <a class="link-label" href="/labels/{{label.text}}">{{label.text}}</a>
                             </span>
                         </div>
-                        <button uib-popover-html="htmlPopover" class="btn btn-default">HTML Popover</button>
+                        <!--<button uib-popover-html="htmlPopover" class="btn btn-default">HTML Popover</button>-->
                         <div class="post-title-user-info">
                             <div class="post-timestamp">
-                                asked 1 min ago
+                                asked {{post.timeAgo}}
                             </div>
                             <div class="post-user-info">
                                 <a href="#" uib-popover="View Profile" popover-trigger="mouseenter" popover-animation="true">Andrey</a> <span title="reputation score"> 7379</span>
@@ -67,7 +100,7 @@
             </table>
         </div>
     </div>
-    <div class="pages">
+    <!--<div class="pages">
         <nav>
             <ul class="pagination">
                 <li>
@@ -87,7 +120,8 @@
                 </li>
             </ul>
         </nav>
-    </div>
+    </div>-->
+    
 </div>
 
 

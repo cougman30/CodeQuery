@@ -1,6 +1,6 @@
 namespace MyApp {
 
-    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap']).config((
+    angular.module('MyApp', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngTagsInput']).config((
         $stateProvider: ng.ui.IStateProvider,
         $urlRouterProvider: ng.ui.IUrlRouterProvider,
         $locationProvider: ng.ILocationProvider
@@ -11,6 +11,12 @@ namespace MyApp {
                 url: '/',
                 templateUrl: '/ngApp/views/home.html',
                 controller: MyApp.Controllers.HomeController,
+                controllerAs: 'controller'
+            })
+            .state('hot', {
+                url: '/hot',
+                templateUrl: '/ngApp/views/homeHot.html',
+                controller: MyApp.Controllers.HomeHotController,
                 controllerAs: 'controller'
             })
             .state('about', {
@@ -31,6 +37,18 @@ namespace MyApp {
                 controller: MyApp.Controllers.EditQuestionController,
                 controllerAs: 'controller'
             })
+            .state('search', {
+                url: '/search/:text',
+                templateUrl: '/ngApp/views/search.html',
+                controller: MyApp.Controllers.SearchController,
+                controllerAs: 'controller'
+            })
+            .state('labelSearch', {
+                url: '/labels/:text',
+                templateUrl: '/ngApp/views/searchLabels.html',
+                controller: MyApp.Controllers.SearchLabelsController,
+                controllerAs: 'controller'
+            })
             .state('deleteQuestion', {
                 url: '/deleteMessage/:id',
                 templateUrl: '/ngApp/views/deleteQuestion.html',
@@ -43,18 +61,18 @@ namespace MyApp {
                 controller: MyApp.Controllers.FindController,
                 controllerAs: 'controller'
             })
-            .state('login', {
-                url: '/login',
-                templateUrl: '/ngApp/views/login.html',
-                controller: MyApp.Controllers.LoginController,
-                controllerAs: 'controller'
-            })
-            .state('signup', {
-                url: '/signup',
-                templateUrl: '/ngApp/views/signup.html',
-                controller: MyApp.Controllers.SignupController,
-                controllerAs: 'controller'
-            })
+            //.state('login', {
+            //    url: '/login',
+            //    templateUrl: '/ngApp/views/login.html',
+            //    controller: MyApp.Controllers.LoginController,
+            //    controllerAs: 'controller'
+            //})
+            //.state('signup', {
+            //    url: '/signup',
+            //    templateUrl: '/ngApp/views/signup.html',
+            //    controller: MyApp.Controllers.SignupController,
+            //    controllerAs: 'controller'
+            //})
             .state('html', {
                 url: '/html',
                 templateUrl: '/ngApp/views/htmlVideo.html',
@@ -101,6 +119,12 @@ namespace MyApp {
                 url: '/edit',
                 templateUrl: 'ngApp/views/profileEdit.html',
                 controller: MyApp.Controllers.ProfileEditController,
+                controllerAs: 'controller'
+            })
+            .state('tags', {
+                url: '/tags',
+                templateUrl: 'ngApp/views/tags.html',
+                controller: MyApp.Controllers.TagsController,
                 controllerAs: 'controller'
             })
             .state('notFound', {

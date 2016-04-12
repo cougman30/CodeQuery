@@ -16,19 +16,59 @@ namespace CodeQuery.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("CodeQuery.Models.Answer", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Body");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<int?>("PostID");
+
+                    b.Property<string>("TimeAgo");
+
+                    b.Property<int>("Votes");
+
+                    b.HasKey("ID");
+                });
+
             modelBuilder.Entity("CodeQuery.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
 
+                    b.Property<string>("AboutMe");
+
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<DateTime>("Birthday");
+
+                    b.Property<string>("Company");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("DisplayName");
 
                     b.Property<string>("Email")
                         .HasAnnotation("MaxLength", 256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("GitHub");
+
+                    b.Property<string>("HobbyCode");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("Location");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -46,12 +86,24 @@ namespace CodeQuery.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<string>("Position");
+
+                    b.Property<string>("SchoolDegree");
+
+                    b.Property<string>("SchoolName");
+
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("Twitter");
 
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
+
+                    b.Property<string>("Website");
+
+                    b.Property<string>("WhereDoYouCode");
 
                     b.HasKey("Id");
 
@@ -64,14 +116,35 @@ namespace CodeQuery.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
+            modelBuilder.Entity("CodeQuery.Models.Job", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CompanyName");
+
+                    b.Property<string>("Location");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("ID");
+                });
+
+            modelBuilder.Entity("CodeQuery.Models.JobLabel", b =>
+                {
+                    b.Property<int>("JobID");
+
+                    b.Property<int>("LabelID");
+
+                    b.HasKey("JobID", "LabelID");
+                });
+
             modelBuilder.Entity("CodeQuery.Models.Label", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("PostID");
-
-                    b.Property<string>("Title");
+                    b.Property<string>("Text");
 
                     b.HasKey("ID");
                 });
@@ -81,13 +154,15 @@ namespace CodeQuery.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<string>("Body");
 
                     b.Property<DateTime>("CreationDate");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<bool>("IsActive");
 
-                    b.Property<int?>("PostID");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<int>("ReplyCount");
 
@@ -113,6 +188,8 @@ namespace CodeQuery.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AnswerID");
 
                     b.Property<DateTime>("CreationDate");
 
@@ -207,18 +284,29 @@ namespace CodeQuery.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("CodeQuery.Models.Label", b =>
+            modelBuilder.Entity("CodeQuery.Models.Answer", b =>
                 {
                     b.HasOne("CodeQuery.Models.Post")
                         .WithMany()
                         .HasForeignKey("PostID");
                 });
 
+            modelBuilder.Entity("CodeQuery.Models.JobLabel", b =>
+                {
+                    b.HasOne("CodeQuery.Models.Job")
+                        .WithMany()
+                        .HasForeignKey("JobID");
+
+                    b.HasOne("CodeQuery.Models.Label")
+                        .WithMany()
+                        .HasForeignKey("LabelID");
+                });
+
             modelBuilder.Entity("CodeQuery.Models.Post", b =>
                 {
-                    b.HasOne("CodeQuery.Models.Post")
+                    b.HasOne("CodeQuery.Models.ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("PostID");
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("CodeQuery.Models.PostLabel", b =>
@@ -234,6 +322,10 @@ namespace CodeQuery.Migrations
 
             modelBuilder.Entity("CodeQuery.Models.Reply", b =>
                 {
+                    b.HasOne("CodeQuery.Models.Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerID");
+
                     b.HasOne("CodeQuery.Models.Post")
                         .WithMany()
                         .HasForeignKey("PostID");
