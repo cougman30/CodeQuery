@@ -12,7 +12,8 @@
 
         constructor(private $stateParams: ng.ui.IStateParamsService,
                     private questionService: MyApp.Services.QuestionService,
-                    private answerService: MyApp.Services.AnswerService)
+                    private answerService: MyApp.Services.AnswerService,
+                    private accountService: MyApp.Services.AccountService)
         {
             this.GetPost();
             this.vote = {};
@@ -20,6 +21,16 @@
             this.comment = {};
             this.answer = {}
         }
+
+        GetClaim(type)
+        {
+            return this.accountService.getClaim(type);
+        }
+
+        TestClaim(type)
+        {
+            console.log(this.accountService.getClaim(type));
+        }   
 
         GetPost()
         {

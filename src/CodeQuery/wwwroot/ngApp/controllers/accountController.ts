@@ -5,15 +5,33 @@
     {
         public text = "";
         public externalLogins;
+        public loggedIn;
+        public search = "";
+        
 
         public getUserName()
         {
             return this.accountService.getUserName();
         }
 
+        public getFirstName()
+        {
+            return this.accountService.getFirstName();
+        }
+
         public getClaim(type)
         {
             return this.accountService.getClaim(type);
+        }
+
+        public getUserID()
+        {
+            return this.accountService.getUserID();
+        }
+
+        public TestUserID()
+        {
+            console.log(this.getUserID());
         }
 
         public isLoggedIn()
@@ -25,6 +43,7 @@
         {
             this.accountService.logout();
             this.$location.path('/');
+            this.loggedIn = false;
         }
 
         public getExternalLogins()
@@ -32,7 +51,8 @@
             return this.accountService.getExternalLogins();
         }
 
-        constructor(private accountService: MyApp.Services.AccountService, private $location: ng.ILocationService, private $uibModal: ng.ui.bootstrap.IModalService)
+        constructor(private accountService: MyApp.Services.AccountService, private $location: ng.ILocationService, private $uibModal: ng.ui.bootstrap.IModalService,
+                    private questionService: MyApp.Services.QuestionService, private $stateParams: ng.ui.IStateParamsService)
         {
             this.getExternalLogins().then((results) =>
             {
@@ -41,6 +61,9 @@
 
             //console.log("Search");
             //console.log(this.text);
+
+            this.loggedIn = this.accountService.loggedIn;
+            //console.log(this.isLoggedIn());
 
         }
 
@@ -73,7 +96,10 @@
         public Search()
         {
             //console.log("Search");
-            console.log(this.text);
+            //console.log(this.search);
+            console.log(this.accountService.loggedIn);
+            //this.posts = this.questionService.SearchQuestions(this.search);
+
         }
     }
 
@@ -117,6 +143,8 @@
 
         public register()
         {
+            console.log("registering new user");
+            console.log(this.registerUser);
             this.accountService.register(this.registerUser).then(() =>
             {
                 this.$location.path('/');

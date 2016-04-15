@@ -26,19 +26,22 @@ namespace CodeQuery.API
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        ApplicationDbContext db;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ApplicationDbContext _db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            this.db = _db;
         }
 
 
@@ -52,9 +55,41 @@ namespace CodeQuery.API
                 Claims = claims.ToDictionary(c => c.Type, c => c.Value),
                 DisplayName = user.DisplayName,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                UserID = user.Id
             };
             return vm;
+        }
+
+        [HttpGet("{id}")]
+        [Route("details")]
+        public async Task<IActionResult> GetUserInfo(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            //var postlist = this.db.Users.Where(u => u.Id == id).Select(u => u.Posts).ToList();
+            var vm = new ApplicationUser
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DisplayName = user.DisplayName,
+                AboutMe = user.AboutMe,
+                Birthday = user.Birthday,
+                Company = user.Company,
+                Email = user.Email,
+                GitHub = user.GitHub,
+                Twitter = user.Twitter,
+                Website = user.Website,
+                UserName = user.UserName,
+                Location = user.Location,
+                IsActive = user.IsActive,
+                HobbyCode = user.HobbyCode,
+                SchoolDegree = user.SchoolDegree,
+                SchoolName = user.SchoolName,
+                WhereDoYouCode = user.WhereDoYouCode,
+                Position = user.Position,
+                //Posts = postlist
+            };
+            return Ok(vm);
         }
 
         //
@@ -105,7 +140,7 @@ namespace CodeQuery.API
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DisplayName = model.DisplayName };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

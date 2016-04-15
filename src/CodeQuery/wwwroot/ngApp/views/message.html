@@ -1,6 +1,8 @@
 ﻿<h2 style="margin-left: 44px">{{controller.post.title}}</h2>
 <!--<h4 style="margin-left: 44px"><a href="/editMesage/{{controller.post.id}}">Edit Post</a></h4>-->
-<h4 style="margin-left: 44px"><a href="/deleteMessage/{{controller.post.id}}">Delete Post</a></h4>
+<h4 style="margin-left: 44px" ng-show="controller.GetClaim('isAdmin')"><a href="/deleteMessage/{{controller.post.id}}">Delete Post</a></h4>
+
+<!--<button class="btn" ng-click="controller.TestClaim('isAdmin')">Claim Test</button>-->
 
 <div class="row">
     <div class="col-md-12">

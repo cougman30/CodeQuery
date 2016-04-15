@@ -12,5 +12,6 @@ namespace CodeQuery.ViewModels.Account
         public string LastName { get; set; }
         public string DisplayName { get; set; }
         public Dictionary<string, string> Claims { get; set; }
+        public string UserID { get; set; }
     }
 }

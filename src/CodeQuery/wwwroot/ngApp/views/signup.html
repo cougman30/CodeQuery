@@ -31,15 +31,15 @@
                     <hr class="or-hr" style="border: 1px solid #ccc;" />
                     <div id="or">OR</div>
                 </div>
-                <form id="login-form">
+                <form id="login-form" ng-submit="controller.register()">
                     <label for="displayName">Display Name</label><br />
-                    <input type="text" name="displayName" id="displayName" placeholder="John Doe" /><br />
+                    <input type="text" name="displayName" id="displayName" placeholder="John Doe" ng-model="controller.registerUser.displayName"/><br />
                     <label for="email">Email</label><br />
-                    <input type="email" name="email" id="email" placeholder="you@example.org" /><br />
+                    <input type="email" name="email" id="email" placeholder="you@example.org" ng-model="controller.registerUser.email"/><br />
                     <label for="password">Password</label><br />
-                    <input type="password" id="password" name="password" placeholder="********" /><br />
+                    <input type="password" id="password" name="password" placeholder="********" ng-model="controller.registerUser.password"/><br />
                     <label for="reenterPassword">Reenter Password</label><br />
-                    <input type="password" id="reenterPassword" name="reenterPassword" placeholder="********" /><br />
+                    <input type="password" id="reenterPassword" name="reenterPassword" placeholder="********" ng-model="controller.registerUser.confirmPassword" /><br />
                     <input type="submit" id="submit-button" name="submit-button" value="Log in" class="btn login-button" />
                 </form>
             </div>

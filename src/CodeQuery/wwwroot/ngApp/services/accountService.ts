@@ -4,6 +4,9 @@
     export class AccountService
     {
 
+        public loggedIn = false;
+        private accountResource;
+
         // Store access token and claims in browser session storage
         private storeUserInfo(userInfo)
         {
@@ -13,14 +16,37 @@
             this.$window.sessionStorage.setItem('firstName', userInfo.firstName);
             this.$window.sessionStorage.setItem('lastName', userInfo.lastname);
             this.$window.sessionStorage.setItem('displayName', userInfo.displayName);
+            this.$window.sessionStorage.setItem('userID', userInfo.userID);
 
             // store claims
             this.$window.sessionStorage.setItem('claims', JSON.stringify(userInfo.claims));
         }
 
+        public getUserInfo(id)
+        {
+            var userResource = this.$resource('/api/account/details');
+            return userResource.get({ id: id });
+        }
+
         public getUserName()
         {
             return this.$window.sessionStorage.getItem('userName');
+        }
+
+        public getFirstName()
+        {
+            return this.$window.sessionStorage.getItem('firstName');
+        }
+
+        public getUserID()
+        {
+            return this.$window.sessionStorage.getItem('userID');
+        }
+
+        public TestUserID()
+        {
+            console.log("test");
+            console.log(this.getUserID());
         }
 
 
@@ -37,6 +63,8 @@
             {
                 this.$http.post('/api/account/login', loginUser).then((result) =>
                 {
+                    this.loggedIn = true;
+                    console.log("set loggedin to true");
                     this.storeUserInfo(result.data);
                     resolve();
                 }).catch((result) =>
@@ -70,6 +98,8 @@
         {
             // clear all of session storage (including claims)
             this.$window.sessionStorage.clear();
+
+            this.loggedIn = false;
 
             // logout on the server
             return this.$http.post('/api/account/logout', null);
@@ -177,12 +207,14 @@
             (
             private $q: ng.IQService,
             private $http: ng.IHttpService,
-            private $window: ng.IWindowService
+            private $window: ng.IWindowService,
+            private $resource: ng.resource.IResourceService
             )
         {
             // in case we are redirected from a social provider
             // we need to check if we are authenticated.
             this.checkAuthentication();
+            this.accountResource = this.$resource('/api/account/');
         }
 
     }

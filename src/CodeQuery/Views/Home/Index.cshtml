@@ -101,66 +101,73 @@
                     <a href="/search/"><button class="navBar-link btn">Search for Questions</button></a>
 
                     @*<div class="dropdown">
-                        <button class="btn navBar-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Tutorials
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="/html">HTML</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/css">CSS</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/js">Javascript</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/">Angular</a></li>
-                        </ul>
-                    </div>*@
+                            <button class="btn navBar-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Tutorials
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="/html">HTML</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/css">CSS</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/js">Javascript</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/">Angular</a></li>
+                            </ul>
+                        </div>*@
 
                 </div>
 
             </div>
 
             <div class="title-right-side col-md-6">
-                
-                @*<div class="dropdown">
-                    <button class="btn navBar-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Welcome Back, Michael
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                        <li><a href="/login">Inbox <span class="badge">4</span></a></li>
-                        <li><a href="/about">Your Questions</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="/profile">Profile</a></li>
-                        <li><a href="/signup">Signup</a></li>
-                        <li><a href="/notFound">notFound</a></li>
-                    </ul>
-                </div>*@
 
-                <div class="btn-group" uib-dropdown keyboard-nav>
-                    <button id="simple-btn-keyboard-nav" type="button" class="btn navBar-link" uib-dropdown-toggle>
-                        Welcome Back, Michael <span class="caret"></span>
+                @*<div class="dropdown">
+                        <button class="btn navBar-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Welcome Back, Michael
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                            <li><a href="/login">Inbox <span class="badge">4</span></a></li>
+                            <li><a href="/about">Your Questions</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/profile">Profile</a></li>
+                            <li><a href="/signup">Signup</a></li>
+                            <li><a href="/notFound">notFound</a></li>
+                        </ul>
+                    </div>*@
+
+                <div class="pull-right" ng-show="controller.getUserName() == null">
+                    <a ng-click="controller.logout()"><button class="navBar-link btn">Logout</button></a>
+                    <a ng-click="controller.Search()"><button class="navBar-link btn">Test</button></a>
+                    <a ng-click="controller.showLoginModal()"><button class="navBar-link btn">Login</button></a>
+                    <a ng-click="controller.showSignUpModal()"><button class="navBar-link btn">Sign Up</button></a>
+                </div>
+
+                <div class="btn-group" uib-dropdown keyboard-nav ng-show="controller.getUserName() != null">
+                    <button id="simple-btn-keyboard-nav" type="button" class="btn navBar-link" uib-dropdown-toggle >
+                        Welcome Back {{controller.getFirstName()}} <span class="caret"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                        <li role="menuitem"><a ng-click="controller.showLoginModal()">Login <span class="badge">4</span></a></li>
-                        <li role="menuitem"><a ng-click="controller.showSignUpModal()">Signup</a></li>
+                        @*<li role="menuitem"><a ng-click="controller.showLoginModal()">Login <span class="badge">4</span></a></li>
+                        <li role="menuitem"><a ng-click="controller.showSignUpModal()">Signup</a></li>*@
                         <li role="menuitem"><a href="/about">You Questions</a></li>
                         <li class="divider"></li>
                         <li role="menuitem"><a href="/profile">Profile</a></li>
-                        <li role="menuitem"><a href="/tags">Tags</a></li>
-                        <li role="menuitem"><a href="/notFound">Not Found</a></li>
+                        @*<li role="menuitem"><a href="/tags">Tags</a></li>*@
+                        <li role="menuitem"><a ng-click="controller.TestUserID()">Not Found</a></li>
                         <li role="menuitem"><a ng-click="controller.logout()">Logout</a></li>
                     </ul>
                 </div>
 
-                <div class="navbar-search-container">
+                @*<div class="navbar-search-container">
                     <form role="search" class="form-inline" ng-submit="controller.Search()">
                         <div class="navbar-search">
-                            <input type="text" placeholder="Search" id="navBarSearch" class="form-control" ng-model="controller.text"/>
+                            <input type="text" placeholder="Search" id="navBarSearch" class="form-control" ng-model="controller.search" />
                             <button class="btn" type="submit">Search</button>
                         </div>
                     </form>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -210,6 +217,6 @@
 
     <!-- Controllers -->
     <script src="~/all.js"></script>
-    
+
 </body>
 </html>

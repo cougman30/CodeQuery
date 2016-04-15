@@ -17,5 +17,7 @@ namespace CodeQuery.Models
         public List<Label> Labels { get; set; }
         public int AnswerCount { get; set; }
         public string TimeAgo { get; set; }
+        public string UserDisplayName { get; set; }
+        public string UserID { get; set; }
     }
 }

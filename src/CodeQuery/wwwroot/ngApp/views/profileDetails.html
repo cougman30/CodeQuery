@@ -1,6 +1,6 @@
 ﻿<div class="container-fluid" id="profile-nested-view">
     <div class="public-info">
-        <h3>Public Information</h3>
+        <h3>Public Information <span ng-show="controller.GetClaim('isAdmin')"> - ADMIN</span></h3>
         <div class="profile-image">
             <img src="../../images/user-example.jpg" height="70"/>
             <!--<label class="btn edit-profile-btn">
@@ -12,21 +12,21 @@
                 <div class="col-sm-6">
                     <div class="user-name">
                         <label class="text-muted">Display Name:</label>
-                        <label>Robert Frost</label>
+                        <label>{{controller.user.displayName}}</label>
                     </div>
                     <div class="user-location">
                         <label class="text-muted">Location</label>
-                        <label>Kirkland, WA</label>
+                        <label>{{controller.user.location}}</label>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="user-position">
                         <label class="text-muted">Position: </label>
-                        <label>Software Engineer</label>
+                        <label>{{controller.user.position}}</label>
                     </div>
                     <div class="user-company">
                         <label class="text-muted">Company: </label>
-                        <label>Robert Frost Academy</label>
+                        <label>{{controller.user.company}}</label>
                     </div>
                 </div>
             </div>
@@ -36,15 +36,15 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <label class="text-muted">Real Name:</label>
-                        <label>Robert Frost</label>
+                        <label>{{controller.user.firstName}} {{controller.user.lastName}}</label>
                     </div>
                     <div class="col-sm-4">
                         <label class="text-muted">Email:</label>
-                        <label>robert@frost.com</label>
+                        <label>{{controller.user.email}}</label>
                     </div>
                     <div class="col-sm-4">
                         <label class="text-muted">Birthday:</label>
-                        <label>March 26, 1874</label>
+                        <label>{{controller.user.birthday}}</label>
                     </div>
                 </div>
             </div>
@@ -52,11 +52,7 @@
             <div class="about-me">
                 <h4 class="text-muted">About Me:</h4>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean rutrum urna ligula, a congue risus semper non. Phasellus faucibus volutpat sem eget finibus. Vivamus non justo sit amet ante pretium sollicitudin id eget tortor. Sed auctor, eros vel vehicula tempor, justo felis ultricies leo, sed efficitur dolor libero eu quam. Aliquam erat volutpat. Curabitur elementum neque sit amet ultrices suscipit. Cras commodo, nisi vel scelerisque elementum, risus nibh consectetur lacus, nec egestas nunc ex vitae risus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam justo urna, consequat vitae mattis at, elementum ut mauris. Curabitur bibendum eros purus, at pulvinar nibh facilisis sit amet. Sed accumsan sapien turpis, a commodo augue ultricies sed.
-
-                    Etiam quis posuere velit. Nunc lacinia molestie velit, vel egestas mauris tincidunt at. Morbi id est dui. Proin sed turpis a dolor suscipit hendrerit. Mauris ac posuere lectus. Cras sapien nisi, condimentum a efficitur quis, cursus eget ligula. Vivamus ullamcorper nibh vel arcu laoreet vestibulum. Duis porttitor molestie sem at euismod. Donec ultricies erat eget lacus cursus, vel porttitor neque eleifend. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc sagittis quam venenatis tortor efficitur scelerisque. Etiam eleifend malesuada pharetra.
-
-                    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras dignissim in arcu ut elementum. Maecenas convallis sapien eu dolor auctor, finibus iaculis justo dictum. Nullam eget eros dolor. Fusce facilisis dui id est varius, ac bibendum dolor commodo. Morbi et mi tempus, ultricies augue non, viverra nisi. Nunc pharetra, lorem ut ultrices aliquam, velit quam malesuada orci, ut dictum arcu lectus cursus dolor. Curabitur urna leo, vulputate vel metus vel, pulvinar ultricies turpis. Ut porta, sapien in interdum consectetur, lorem ligula commodo purus, vel rhoncus mauris leo ac tortor. Sed maximus nulla sed elit ornare, in vulputate lorem sagittis. Donec ac lobortis enim. Donec nec sollicitudin sapien, nec tempus nulla. Nulla vel tincidunt tortor. Praesent finibus est ac iaculis tincidunt. Nullam vitae metus erat. Aenean id mi fermentum erat molestie condimentum.
+                    {{controller.user.aboutMe}}
                 </p>
             </div>
         </div>
@@ -69,21 +65,21 @@
                     <div class="website">
                         <label class="text-muted">Website link</label><br />
                         <i class="fa fa-link profile-icon"></i>
-                        <label>www.robertfrost.com</label>
+                        <label>{{controller.user.website}}</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="twitter">
                         <label class="text-muted">Twitter link or username</label><br />
                         <i class="fa fa-twitter profile-icon"></i>
-                        <label>@robertFrost</label>
+                        <label>{{controller.user.twitter}}</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="github">
                         <label class="text-muted">GitHub link or username</label><br />
                         <i class="fa fa-github-alt profile-icon"></i>
-                        <label>https://github.com/robertforst/awesome-repo</label>
+                        <label>{{controller.user.gitHub}}</label>
                     </div>
                 </div>
             </div>

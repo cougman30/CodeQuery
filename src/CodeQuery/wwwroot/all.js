@@ -127,23 +127,37 @@ var MyApp;
     var Controllers;
     (function (Controllers) {
         var AccountController = (function () {
-            function AccountController(accountService, $location, $uibModal) {
+            function AccountController(accountService, $location, $uibModal, questionService, $stateParams) {
                 var _this = this;
                 this.accountService = accountService;
                 this.$location = $location;
                 this.$uibModal = $uibModal;
+                this.questionService = questionService;
+                this.$stateParams = $stateParams;
                 this.text = "";
+                this.search = "";
                 this.getExternalLogins().then(function (results) {
                     _this.externalLogins = results;
                 });
                 //console.log("Search");
                 //console.log(this.text);
+                this.loggedIn = this.accountService.loggedIn;
+                //console.log(this.isLoggedIn());
             }
             AccountController.prototype.getUserName = function () {
                 return this.accountService.getUserName();
             };
+            AccountController.prototype.getFirstName = function () {
+                return this.accountService.getFirstName();
+            };
             AccountController.prototype.getClaim = function (type) {
                 return this.accountService.getClaim(type);
+            };
+            AccountController.prototype.getUserID = function () {
+                return this.accountService.getUserID();
+            };
+            AccountController.prototype.TestUserID = function () {
+                console.log(this.getUserID());
             };
             AccountController.prototype.isLoggedIn = function () {
                 return this.accountService.isLoggedIn();
@@ -151,6 +165,7 @@ var MyApp;
             AccountController.prototype.logout = function () {
                 this.accountService.logout();
                 this.$location.path('/');
+                this.loggedIn = false;
             };
             AccountController.prototype.getExternalLogins = function () {
                 return this.accountService.getExternalLogins();
@@ -171,7 +186,9 @@ var MyApp;
             };
             AccountController.prototype.Search = function () {
                 //console.log("Search");
-                console.log(this.text);
+                //console.log(this.search);
+                console.log(this.accountService.loggedIn);
+                //this.posts = this.questionService.SearchQuestions(this.search);
             };
             return AccountController;
         }());
@@ -208,6 +225,8 @@ var MyApp;
             }
             RegisterController.prototype.register = function () {
                 var _this = this;
+                console.log("registering new user");
+                console.log(this.registerUser);
                 this.accountService.register(this.registerUser).then(function () {
                     _this.$location.path('/');
                 }).catch(function (results) {
@@ -479,16 +498,23 @@ var MyApp;
     var Controllers;
     (function (Controllers) {
         var MessageController = (function () {
-            function MessageController($stateParams, questionService, answerService) {
+            function MessageController($stateParams, questionService, answerService, accountService) {
                 this.$stateParams = $stateParams;
                 this.questionService = questionService;
                 this.answerService = answerService;
+                this.accountService = accountService;
                 this.GetPost();
                 this.vote = {};
                 this.addComment = false;
                 this.comment = {};
                 this.answer = {};
             }
+            MessageController.prototype.GetClaim = function (type) {
+                return this.accountService.getClaim(type);
+            };
+            MessageController.prototype.TestClaim = function (type) {
+                console.log(this.accountService.getClaim(type));
+            };
             MessageController.prototype.GetPost = function () {
                 var _this = this;
                 var questionID = this.$stateParams['id'];
@@ -644,9 +670,22 @@ var MyApp;
     var Controllers;
     (function (Controllers) {
         var ProfileController = (function () {
-            function ProfileController() {
-                this.message = "Hello from the login page!";
+            function ProfileController(accountService) {
+                this.accountService = accountService;
+                this.id = this.accountService.getUserID();
+                this.GetUserInfo();
             }
+            ProfileController.prototype.GetUserInfo = function () {
+                console.log("ProfileController");
+                console.log(this.id);
+                //var userID = this.accountService.getUserID();
+                //console.log(userID);
+                this.user = this.accountService.getUserInfo(this.id);
+            };
+            ProfileController.prototype.ShowUser = function () {
+                console.log("test");
+                console.log(this.user);
+            };
             return ProfileController;
         }());
         Controllers.ProfileController = ProfileController;
@@ -657,8 +696,21 @@ var MyApp;
     var Controllers;
     (function (Controllers) {
         var ProfileDetailsController = (function () {
-            function ProfileDetailsController() {
+            function ProfileDetailsController(accountService) {
+                this.accountService = accountService;
+                this.id = this.accountService.getUserID();
+                this.GetUserInfo();
             }
+            ProfileDetailsController.prototype.GetUserInfo = function () {
+                //console.log("ProfileDetailsController");
+                //console.log(this.id);
+                //var userID = this.accountService.getUserID();
+                //console.log(userID);
+                this.user = this.accountService.getUserInfo(this.id);
+            };
+            ProfileDetailsController.prototype.GetClaim = function (type) {
+                return this.accountService.getClaim(type);
+            };
             return ProfileDetailsController;
         }());
         Controllers.ProfileDetailsController = ProfileDetailsController;
@@ -669,12 +721,27 @@ var MyApp;
     var Controllers;
     (function (Controllers) {
         var ProfileEditController = (function () {
-            function ProfileEditController() {
+            function ProfileEditController(accountService) {
+                this.accountService = accountService;
                 this.radioModel = "Right";
                 this.op = "work";
                 this.dt = new Date();
                 this.format = 'shortDate';
+                this.id = this.accountService.getUserID();
+                this.GetUserInfo();
             }
+            ProfileEditController.prototype.GetUserInfo = function () {
+                //console.log("ProfileDetailsController");
+                //console.log(this.id);
+                //var userID = this.accountService.getUserID();
+                //console.log(userID);
+                this.user = this.accountService.getUserInfo(this.id);
+            };
+            ProfileEditController.prototype.getClaim = function (type) {
+                return this.accountService.getClaim(type);
+            };
+            ProfileEditController.prototype.DetermineOp = function () {
+            };
             return ProfileEditController;
         }());
         Controllers.ProfileEditController = ProfileEditController;
@@ -825,13 +892,16 @@ var MyApp;
     var Services;
     (function (Services) {
         var AccountService = (function () {
-            function AccountService($q, $http, $window) {
+            function AccountService($q, $http, $window, $resource) {
                 this.$q = $q;
                 this.$http = $http;
                 this.$window = $window;
+                this.$resource = $resource;
+                this.loggedIn = false;
                 // in case we are redirected from a social provider
                 // we need to check if we are authenticated.
                 this.checkAuthentication();
+                this.accountResource = this.$resource('/api/account/');
             }
             // Store access token and claims in browser session storage
             AccountService.prototype.storeUserInfo = function (userInfo) {
@@ -841,11 +911,26 @@ var MyApp;
                 this.$window.sessionStorage.setItem('firstName', userInfo.firstName);
                 this.$window.sessionStorage.setItem('lastName', userInfo.lastname);
                 this.$window.sessionStorage.setItem('displayName', userInfo.displayName);
+                this.$window.sessionStorage.setItem('userID', userInfo.userID);
                 // store claims
                 this.$window.sessionStorage.setItem('claims', JSON.stringify(userInfo.claims));
             };
+            AccountService.prototype.getUserInfo = function (id) {
+                var userResource = this.$resource('/api/account/details');
+                return userResource.get({ id: id });
+            };
             AccountService.prototype.getUserName = function () {
                 return this.$window.sessionStorage.getItem('userName');
+            };
+            AccountService.prototype.getFirstName = function () {
+                return this.$window.sessionStorage.getItem('firstName');
+            };
+            AccountService.prototype.getUserID = function () {
+                return this.$window.sessionStorage.getItem('userID');
+            };
+            AccountService.prototype.TestUserID = function () {
+                console.log("test");
+                console.log(this.getUserID());
             };
             AccountService.prototype.getClaim = function (type) {
                 var allClaims = JSON.parse(this.$window.sessionStorage.getItem('claims'));
@@ -855,6 +940,8 @@ var MyApp;
                 var _this = this;
                 return this.$q(function (resolve, reject) {
                     _this.$http.post('/api/account/login', loginUser).then(function (result) {
+                        _this.loggedIn = true;
+                        console.log("set loggedin to true");
                         _this.storeUserInfo(result.data);
                         resolve();
                     }).catch(function (result) {
@@ -880,6 +967,7 @@ var MyApp;
             AccountService.prototype.logout = function () {
                 // clear all of session storage (including claims)
                 this.$window.sessionStorage.clear();
+                this.loggedIn = false;
                 // logout on the server
                 return this.$http.post('/api/account/logout', null);
             };
